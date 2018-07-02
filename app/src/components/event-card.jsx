@@ -19,6 +19,15 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 
 const styles = theme => ({
   root: {
@@ -33,6 +42,13 @@ const styles = theme => ({
   },
   actions: {
     display: 'flex',
+  },
+  flex: {
+    flex: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -50,7 +66,12 @@ const styles = theme => ({
 });
 
 class RecipeReviewCard extends React.Component {
-  state = { expanded: false, value: 0,};
+  state = {
+    expanded: false,
+    value: 0,
+    auth: true,
+    anchorEl: null,
+  };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
@@ -58,13 +79,65 @@ class RecipeReviewCard extends React.Component {
   handleChange = (event, value) => {
     this.setState({ value });
   };
+  handleTitleChange = (event, checked) => {
+    this.setState({ auth: checked });
+  };
+
+  handleMenu = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
 
 
   render() {
     const { classes } = this.props;
+    const { auth, anchorEl } = this.state;
+    const open = Boolean(anchorEl);
 
     return (
       <div>
+      <AppBar position="static">
+          <Toolbar>
+            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="title" color="inherit" className={classes.flex}>
+              Title
+            </Typography>
+            {auth && (
+              <div>
+                <IconButton
+                  aria-owns={open ? 'menu-appbar' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleMenu}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={open}
+                  onClose={this.handleClose}
+                >
+                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                </Menu>
+              </div>
+            )}
+          </Toolbar>
+        </AppBar>
       <Paper className={classes.root}>
         <Tabs
           value={this.state.value}
