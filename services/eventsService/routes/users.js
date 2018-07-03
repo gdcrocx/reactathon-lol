@@ -1,16 +1,16 @@
 var router = require('express').Router(),
     service = require('../services/users');
 
-router.get('/all', service.getUserDetails);
+router.get('/all', service.getAllUsers);
 
-router.get('/:id', service.getUserDetailsById);
+router.get('/:id', service.getUsersById);
 
-router.post('/:username/:phoneno/:firstname/:lastname/:email/:userpass/:usertype', service.addUserDetails);
+router.post('/:userEmpId/:userVzid/:username/:userFirstName/:userLastName/:userEmailId/:userOrgId:/isAdmin:/isUserActive:/userRecognition', service.postUsers);
 
-router.delete('/:userid/:uid/:upass', service.deleteUserDetails);
+router.delete('/:userEmpId/:userEmpId/:userPassword', service.deleteUsersById);
 
-router.put('/:userid/:username/:phoneno/:firstname/:lastname/:email/:userpass/:usertype', service.updateUserDetails);
+router.put('/:userEmpId/:userVzid/:username/:userFirstName/:userLastName/:userEmailId/:userOrgId:/isAdmin:/isUserActive:/userRecognition', service.putUsersById);
 
-router.get('/type/:usertype', service.getUserDetailsByUserType);
+// router.get('/type/:usertype', service.getUserDetailsByUserType);
 
 module.exports = router;

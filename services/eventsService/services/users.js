@@ -1,13 +1,13 @@
 var usersRepo = require('../data/users');
 
-exports.getUserDetails = function (req, res) {
+exports.getAllUsers = function (req, res) {
     console.log("\nUser Service Contacted...");
     try {
         if(!req) {
             return res.status(400).end();
         }   
         console.log("Service Request Id : " + req);
-        usersRepo.getUserDetails(req, function (err, result) {            
+        usersRepo.getAllUsers(req, function (err, result) {            
             if(err) {
                 console.log("Error: 500, returned " + err);
                 return res.status(500).end();                
@@ -31,14 +31,14 @@ exports.getUserDetails = function (req, res) {
     }
 };
 
-exports.getUserDetailsById = function (req, res) {
+exports.getUsersById = function (req, res) {
     console.log("\nUser Service Contacted...");
     try {
         if(!req.params.id) {
             return res.status(400).end();
         }        
         console.log("Service Request Id : " + req.params.id);
-        usersRepo.getUserDetailsById (req.params.id, function (err, result) {
+        usersRepo.getUsersById (req.params.id, function (err, result) {
             //console.log("Request returned some value. Res : " + res + " Result : " + result);
             if(err) {
                 console.log("Error: 500, returned " + err);
@@ -61,7 +61,7 @@ exports.getUserDetailsById = function (req, res) {
     }
 };
 
-exports.addUserDetails = function (req, res) {
+exports.postUsers = function (req, res) {
     console.log("\nUser Service Contacted...");  
     try {
         if(typeof req.params.username == 'undefined' || typeof req.params.phoneno == 'undefined' || typeof req.params.firstname == 'undefined' || typeof req.params.lastname == 'undefined' || typeof req.params.email == 'undefined' || typeof req.params.userpass == 'undefined' || typeof req.params.usertype == 'undefined') {
@@ -69,7 +69,7 @@ exports.addUserDetails = function (req, res) {
         }   
         console.log("Service Request Username : " + req.params.username + " Phone# : " + req.params.phoneno + " Firstname : " + req.params.firstname + " Lastname : " + req.params.lastname + " Email Id : " + req.params.email + " User Type : " + req.params.usertype);
 
-        usersRepo.addUserDetails(req, function (err, result) {            
+        usersRepo.postUsers(req, function (err, result) {            
             if(err) {
                 console.log("Error: 500, returned " + err);
                 return res.status(500).end();                
@@ -93,7 +93,7 @@ exports.addUserDetails = function (req, res) {
     }
 };
 
-exports.deleteUserDetails = function (req, res) {
+exports.deleteUsersById = function (req, res) {
     console.log("\nUser Service Contacted...");  
     try {
         if(typeof req.params.userid == 'undefined' || typeof req.params.uid == 'undefined' || typeof req.params.upass == 'undefined') {
@@ -101,7 +101,7 @@ exports.deleteUserDetails = function (req, res) {
         }   
         console.log("Service Request User Id : " + req.params.userid + " User UID : " + req.params.uid);
 
-        usersRepo.deleteUserDetails(req, function (err, result) {            
+        usersRepo.deleteUsersById(req, function (err, result) {            
             if(err) {
                 console.log("Error: 500, returned " + err);
                 return res.status(500).end();                
@@ -125,7 +125,7 @@ exports.deleteUserDetails = function (req, res) {
     }
 };
 
-exports.updateUserDetails = function (req, res) {
+exports.putUsersById = function (req, res) {
     console.log("\nUser Service Contacted...");  
     try {
         if(typeof req.params.userid == 'undefined' || typeof req.params.username == 'undefined' || typeof req.params.phoneno == 'undefined' || typeof req.params.firstname == 'undefined' || typeof req.params.lastname == 'undefined' || typeof req.params.email == 'undefined' || typeof req.params.userpass == 'undefined' || typeof req.params.usertype == 'undefined') {
@@ -133,7 +133,7 @@ exports.updateUserDetails = function (req, res) {
         }   
         console.log("Service Request User Id : " + req.params.userid +" Username : " + req.params.username + " Phone# : " + req.params.phoneno + " Firstname : " + req.params.firstname + " Lastname : " + req.params.lastname + " Email Id : " + req.params.email + " User Type : " + req.params.usertype);
 
-        usersRepo.updateUserDetails(req, function (err, result) {            
+        usersRepo.putUsersById(req, function (err, result) {            
             if(err) {
                 console.log("Error: 500, returned " + err);
                 return res.status(500).end();                
@@ -157,34 +157,34 @@ exports.updateUserDetails = function (req, res) {
     }
 };
 
-exports.getUserDetailsByUserType = function (req, res) {
-    console.log("\nUser Service Contacted...");  
-    try {
-        if(typeof req.params.usertype == 'undefined') {
-            return res.status(400).end();
-        }   
-        console.log("Service Request User Type : " + req.params.usertype);
+// exports.getUserDetailsByUserType = function (req, res) {
+//     console.log("\nUser Service Contacted...");  
+//     try {
+//         if(typeof req.params.usertype == 'undefined') {
+//             return res.status(400).end();
+//         }   
+//         console.log("Service Request User Type : " + req.params.usertype);
 
-        usersRepo.getUserDetailsByUserType(req, function (err, result) {            
-            if(err) {
-                console.log("Error: 500, returned " + err);
-                return res.status(500).end();                
-            }
-            if(!result) {
-                console.log("Error: 404, returned " + result);
-                return res.status(404).end();
-            }
-            if(result) {
-                console.log("Status: Success | Status Code: 200 | " + result);
-                return res.status(200).set('Content-Type', 'application/json').send(result).end();
-            }
-        });
-    }
-    catch(err) {
-        console.log("Error 500 - Caught an exception - " + err);
-        return res.status(500).end();
-    }
-    finally {    
-        console.log("users Over and out..");
-    }
-};
+//         usersRepo.getUserDetailsByUserType(req, function (err, result) {            
+//             if(err) {
+//                 console.log("Error: 500, returned " + err);
+//                 return res.status(500).end();                
+//             }
+//             if(!result) {
+//                 console.log("Error: 404, returned " + result);
+//                 return res.status(404).end();
+//             }
+//             if(result) {
+//                 console.log("Status: Success | Status Code: 200 | " + result);
+//                 return res.status(200).set('Content-Type', 'application/json').send(result).end();
+//             }
+//         });
+//     }
+//     catch(err) {
+//         console.log("Error 500 - Caught an exception - " + err);
+//         return res.status(500).end();
+//     }
+//     finally {    
+//         console.log("users Over and out..");
+//     }
+// };

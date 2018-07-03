@@ -5,30 +5,18 @@ var db_url = config.get('db.protocol') + '://' + config.get('db.host') + ':'+ co
 var db_database = config.get('db.database')
 var default_db_collection = "events"
 
-exports.addLocation = function (req, res) {
-    pool.getConnection(function (err, connection) {
-        if (err) {
-            connection.release();
-            res.json({ "code": 503, "status": "Error connecting to database.. :(" });
-            return;
-        }
-        console.log('\nConnected as Thread Id: ' + connection.threadId);
+exports.addEvent = function (req, res) {
+    MongoClient.connect(db_url,{ useNewUrlParser: true }, function (err, client) {
+        if (err) throw err;
 
-        console.log('Attempting to add location : ' + req.params.loc_address + " " + req.params.loc_area + " " + req.params.loc_landmark + " " + req.params.loc_city);
+        var db = client.db(db_database);
 
-        connection.query("CALL spAddLocationDetails(" + connection.escape(req.params.loc_address) + "," + connection.escape(req.params.loc_area) + "," + connection.escape(req.params.loc_landmark) + "," + connection.escape(req.params.loc_city) + ");", function (err, rows) {
-            connection.release();
-            if (!err) {
-                var response = JSON.stringify(rows[0]);
-                return res(null, response);
-            }
+        db.collection(default_db_collection).find().toArray(function (findErr, result) {
+            if (findErr) throw findErr;
+            console.log(result);
+            client.close();
         });
-
-        connection.on('error', function (err) {
-            var error = { "code": 503, "status": "Error connecting to database.. :(" };
-            return error;
-        });
-    });
+    }); 
 };
 
 exports.deleteLocation = function (req, res) {
@@ -143,9 +131,8 @@ exports.getAllLocationsByLatLngRad = function (req, res) {
     });
 };
 
-exports.getAllEvents = function (req, res) {
-    console.log(db_url)
-    MongoClient.connect(db_url,{ useNewUrlParser: true }, function (err, client) {
+exports.getAllEvents = function (req, res) {    
+    MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
         if (err) throw err;
 
         var db = client.db(db_database);
