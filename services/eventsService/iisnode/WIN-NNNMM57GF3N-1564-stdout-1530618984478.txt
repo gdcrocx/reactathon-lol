@@ -1,0 +1,2 @@
+DAL API Server listening at http://127.0.0.1:8090
+DAL DB Server listening at 127.0.0.1:27017
