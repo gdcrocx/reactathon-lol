@@ -159,6 +159,39 @@ exports.getAllTeams = function (req, res) {
     }
 };
 
+exports.getTeamsByEventId = function (req, res) {
+    console.log("\nTeams Service Contacted...");  
+    try {
+        if(typeof req.params.teamId == 'undefined') {
+            return res.status(400).end();
+        }   
+
+        console.log("Service Request Teams Id : " + req.params.teamId + " Record Limit : " + req.params.recordsLimit);
+       
+        teamsRepo.getTeamsByEventId(req, function (err, result) {            
+            if(err) {
+                console.log("Error: 500, returned " + err);
+                return res.status(500).end();                
+            }
+            if(!result) {
+                console.log("Error: 404, returned " + result);
+                return res.status(404).end();
+            }
+            if(result) {
+                console.log("Status: Success | Status Code: 200 | " + result);
+                return res.status(200).set('Content-Type', 'application/json').send(result).end();
+            }
+        });
+    }
+    catch(err) {
+        console.log("Error 500 - Caught an exception - " + err);
+        return res.status(500).end();
+    }
+    finally {    
+        console.log("Teams Over and out..");
+    }
+};
+
 // exports.getVendorParkingIdByLatLng = function (req, res) {
 //     console.log("\nTeams Service Contacted...");  
 //     try {

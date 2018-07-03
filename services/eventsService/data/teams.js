@@ -77,6 +77,23 @@ exports.getAllTeams = function (req, res) {
     }); 
 };
 
+exports.getTeamsByEventId = function(req, res) {  
+    console.log("getTeamsByEventId")
+    MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
+        if (err) throw err;
+
+        var db = client.db(db_database);
+
+        //db.teams.find({"teamEventId": 1}).sort({"teamScoreMaxTotal": -1})
+        db.collection(default_db_collection).find({ "teamEventId": parseInt(req.params.teamEventId) }).sort({ "teamScoreMaxTotal": -1}).limit(parseInt(req.params.recordsLimit)).toArray(function(err, result) {
+            if (err) throw err;
+            console.log(result);       
+            return res(null, result)     
+        });
+        client.close(); 
+    }); 
+};
+
 // exports.getVendorParkingIdByLatLng = function(req, res) {  
 //     pool.getConnection(function(err, connection){
 //         if (err) {

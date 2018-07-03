@@ -77,6 +77,60 @@ exports.getAllEvents = function (req, res) {
     }); 
 };
 
+exports.getLiveEvents = function (req, res) {   
+    
+    var isoDateString = new Date().toISOString()
+
+    MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
+        if (err) throw err;
+
+        var db = client.db(db_database);        
+
+        db.collection(default_db_collection).find({ $and: [ { "eventNominationStartDate": { $lte: new Date(isoDateString) } }, { "eventFinaleDate": { $gte:  new Date(isoDateString) } }, { "eventEnabled" : true } ] }).sort({"eventStartDate":1}).toArray(function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            return res(null, result)                
+        });
+        client.close();
+    }); 
+};
+
+exports.getUpcomingEvents = function (req, res) { 
+    
+    var isoDateString = new Date().toISOString()
+
+    MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
+        if (err) throw err;
+
+        var db = client.db(db_database);
+
+        db.collection(default_db_collection).find({ $and: [ { "eventNominationStartDate": { $gt: new Date(isoDateString) } }, { "eventEnabled" : true } ]}).sort({"eventNominationStartDate":1}).toArray(function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            return res(null, result)                
+        });
+        client.close();
+    }); 
+};
+
+exports.getPreviousEvents = function (req, res) {  
+    
+    var isoDateString = new Date().toISOString()        
+
+    MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
+        if (err) throw err;
+
+        var db = client.db(db_database);
+
+        db.collection(default_db_collection).find({ $and: [ { "eventFinaleDate": { $lt: new Date(isoDateString) } }, { "eventEnabled" : true } ]}).sort({"eventNominationStartDate":1}).toArray(function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            return res(null, result)                
+        });
+        client.close();
+    }); 
+};
+
 // exports.getAllLocationsByLatLngRad = function (req, res) {
 //     pool.getConnection(function (err, connection) {
 //         if (err) {

@@ -155,6 +155,103 @@ exports.getAllEvents = function (req, res) {
     }
 };
 
+// Live Events - db.events.find({ $and: [ { "eventNominationStartDate": { $gt: ISODate() } }, { "eventFinaleDate": { $lt: ISODate() } }, { "eventEnabled" : true } ] })
+exports.getLiveEvents = function (req, res) {
+    console.log("\nEvents Service Contacted...");
+    try {        
+        if (!req) {
+            return res.status(400).end();
+        }
+        console.log("Service Request Events Id : Live");
+        eventsRepo.getLiveEvents(req, function (err, result) {
+            if (err) {
+                console.log("Error: 500, returned " + err);
+                return res.status(500).end();
+            }
+            if (!result) {
+                console.log("Error: 404, returned " + result);
+                return res.status(404).end();
+            }
+            if (result) {
+                console.log("Status: Success | Status Code: 200 | " + result);
+                return res.status(200).set('Content-Type', 'application/json').send(result).end();
+            }
+        });
+    }
+    catch (err) {
+        console.log("Error 500 - Caught an exception - " + err);
+        return res.status(500).end();
+    }
+    finally {
+        console.log("Events Over and out..");
+    }
+};
+
+// Upcoming Events - db.events.find({ $and: [ { "eventNominationStartDate": { $gt: new Date(isoDateString) } }, { "eventEnabled" : true } ]})
+exports.getUpcomingEvents = function (req, res) {
+    console.log("\nEvents Service Contacted...");
+    try {
+        if (!req) {
+            return res.status(400).end();
+        }
+        console.log("Service Request Events Id : Upcoming");
+        eventsRepo.getUpcomingEvents(req, function (err, result) {
+            if (err) {
+                console.log("Error: 500, returned " + err);
+                return res.status(500).end();
+            }
+            if (!result) {
+                console.log("Error: 404, returned " + result);
+                return res.status(404).end();
+            }
+            if (result) {
+                console.log("Status: Success | Status Code: 200 | " + result);
+                return res.status(200).set('Content-Type', 'application/json').send(result).end();
+            }
+        });
+    }
+    catch (err) {
+        console.log("Error 500 - Caught an exception - " + err);
+        return res.status(500).end();
+    }
+    finally {
+        console.log("Events Over and out..");
+    }
+};
+
+// Previous Events - db.events.find({ $and: [ { "eventFinaleDate": { $lt: new Date(isoDateString) } }, { "eventEnabled" : true } ]})
+exports.getPreviousEvents = function (req, res) {
+    console.log("\nEvents Service Contacted...");
+    try {
+        if (!req) {
+            return res.status(400).end();
+        }
+        console.log("Service Request Events Id : Previous");
+        eventsRepo.getPreviousEvents(req, function (err, result) {
+            if (err) {
+                console.log("Error: 500, returned " + err);
+                return res.status(500).end();
+            }
+            if (!result) {
+                console.log("Error: 404, returned " + result);
+                return res.status(404).end();
+            }
+            if (result) {
+                console.log("Status: Success | Status Code: 200 | " + result);
+                return res.status(200).set('Content-Type', 'application/json').send(result).end();
+            }
+        });
+    }
+    catch (err) {
+        console.log("Error 500 - Caught an exception - " + err);
+        return res.status(500).end();
+    }
+    finally {
+        console.log("Events Over and out..");
+    }
+};
+
+
 // exports.getAllLocationsByLatLngRad = function (req, res) {
 //     console.log("\nEvents Service Contacted...");
 //     try {

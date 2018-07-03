@@ -5,6 +5,12 @@ var router = require('express').Router(),
 
 router.get('/all', service.getAllEvents);
 
+router.get('/live', service.getLiveEvents);
+
+router.get('/upcoming', service.getUpcomingEvents);
+
+router.get('/previous', service.getPreviousEvents);
+
 // router.get('/coveredlocations', service.getCoveredLocations);
 
 router.post('/:eventId/:eventName/:eventDescription/:eventReleaseDate/:eventNominationStartDate/:eventNominationEndDate/:eventStartDate/:eventEndDate/:eventDemoDate/:eventFinaleDate/:eventEnabled/:eventScoring/:eventScoringMaxTotal', service.postEvents);
