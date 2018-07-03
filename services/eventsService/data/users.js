@@ -105,6 +105,37 @@ exports.putUsersById = function (req, res) {
         });                
     });
 };
+
+exports.getMostBadgesPerUser = function (req, res) {   
+    MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
+        if (err) throw err;
+
+        var db = client.db(db_database);
+
+        db.collection(default_db_collection).find().sort({"userRecognition.badgesCount": -1}).limit(parseInt(req)).toArray(function(err, result) {
+            if (err) throw err;
+            console.log(result);       
+            return res(null, result)     
+        });
+        client.close(); 
+    }); 
+};
+
+exports.getMostAwardedUser = function (req, res) {  
+    MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
+        if (err) throw err;
+
+        var db = client.db(db_database);
+
+        db.collection(default_db_collection).find().sort({"userRecognition.awardsCount": -1}).limit(parseInt(req)).toArray(function(err, result) {
+            if (err) throw err;
+            console.log(result);       
+            return res(null, result)     
+        });
+        client.close(); 
+    }); 
+};
+
 // exports.getUserDetails = function(req, res) {
   
 //     pool.getConnection(function(err, connection){

@@ -13,4 +13,8 @@ router.put('/:userEmpId/:userVzid/:username/:userFirstName/:userLastName/:userEm
 
 // router.get('/type/:usertype', service.getUserDetailsByUserType);
 
+router.get('/mostAwarded/:recordsLimit', service.getMostAwardedUser);
+
+router.get('/mostBadges/:recordsLimit', service.getMostBadgesPerUser);
+
 module.exports = router;

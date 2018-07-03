@@ -3,10 +3,10 @@ var loginRepo = require('../data/login');
 exports.getLoginVerified = function (req, res) {
     console.log("\nLogin Service Contacted...");  
     try {
-        if(!req.params.user_id || !req.params.user_pass) {
+        if(!req.params.userEmpId || !req.params.userPassword) {
             return res.status(400).end();
         }   
-        console.log("Service Request User Id : " + req.params.user_id + " Password : " + req.params.user_pass);
+        console.log("Service Request User Id : " + req.params.userEmpId) // + " Password : " + req.params.userPassword);
         loginRepo.getLoginVerified(req, function (err, result) {            
             if(err) {
                 console.log("Error: 500, returned " + err);
