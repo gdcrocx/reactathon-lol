@@ -1,168 +1,13 @@
-var locationRepo = require('../data/events');
+var eventsRepo = require('../data/events');
 
-exports.addLocation = function (req, res) {
-    console.log("\nLocation Service Contacted...");
-    try {
-        if (!req.params.loc_address || !req.params.loc_area || !req.params.loc_landmark || !req.params.loc_city) {
-            return res.status(400).end();
-        }
-        console.log("Service Request Location Address : " + req.params.loc_address + " Area : " + req.params.loc_area + " Landmark : " + req.params.loc_landmark + " City : " + req.params.loc_city);
-        locationRepo.addLocation(req, function (err, result) {
-            if (err) {
-                console.log("Error: 500, returned " + err);
-                return res.status(500).end();
-            }
-            if (!result) {
-                console.log("Error: 404, returned " + result);
-                return res.status(404).end();
-            }
-            if (result) {
-                console.log("Status: Success | Status Code: 200 | " + result);
-                return res.status(200).set('Content-Type', 'application/json').send(result).end();
-            }
-        });
-    }
-    catch (err) {
-        console.log("Error 500 - Caught an exception - " + err);
-        return res.status(500).end();
-    }
-    finally {
-        console.log("location Over and out..");
-    }
-};
-
-exports.deleteLocation = function (req, res) {
-    console.log("\nLocation Service Contacted...");
-    try {
-        if (!req.params.locationid || !req.params.uid || !req.params.upass) {
-            return res.status(400).end();
-        }
-        console.log("Service Request Location Id : " + req.params.locationid + " User Id : " + req.params.uid);
-        locationRepo.deleteLocation(req, function (err, result) {
-            if (err) {
-                console.log("Error: 500, returned " + err);
-                return res.status(500).end();
-            }
-            if (!result) {
-                console.log("Error: 404, returned " + result);
-                return res.status(404).end();
-            }
-            if (result) {
-                console.log("Status: Success | Status Code: 200 | " + result);
-                return res.status(200).set('Content-Type', 'application/json').send(result).end();
-            }
-        });
-    }
-    catch (err) {
-        console.log("Error 500 - Caught an exception - " + err);
-        return res.status(500).end();
-    }
-    finally {
-        console.log("location Over and out..");
-    }
-};
-
-exports.updateLocation = function (req, res) {
-    console.log("\nLocation Service Contacted...");
-    try {
-        if (!req.params.locationid || !req.params.loc_address || !req.params.loc_area || !req.params.loc_landmark || !req.params.loc_city) {
-            return res.status(400).end();
-        }
-        console.log("Service Request Location Id : " + req.params.locationid + " Address : " + req.params.loc_address + " Area : " + req.params.loc_area + " Landmark : " + req.params.loc_landmark + " City : " + req.params.loc_city);
-        locationRepo.updateLocation(req, function (err, result) {
-            if (err) {
-                console.log("Error: 500, returned " + err);
-                return res.status(500).end();
-            }
-            if (!result) {
-                console.log("Error: 404, returned " + result);
-                return res.status(404).end();
-            }
-            if (result) {
-                console.log("Status: Success | Status Code: 200 | " + result);
-                return res.status(200).set('Content-Type', 'application/json').send(result).end();
-            }
-        });
-    }
-    catch (err) {
-        console.log("Error 500 - Caught an exception - " + err);
-        return res.status(500).end();
-    }
-    finally {
-        console.log("location Over and out..");
-    }
-};
-
-exports.getLocationById = function (req, res) {
-    console.log("\nLocation Service Contacted...");
-    try {
-        if (!req.params.locationid) {
-            return res.status(400).end();
-        }
-        console.log("Service Request Location Id : " + req.params.locationid);
-        locationRepo.getLocationById(req, function (err, result) {
-            if (err) {
-                console.log("Error: 500, returned " + err);
-                return res.status(500).end();
-            }
-            if (!result) {
-                console.log("Error: 404, returned " + result);
-                return res.status(404).end();
-            }
-            if (result) {
-                console.log("Status: Success | Status Code: 200 | " + result);
-                return res.status(200).set('Content-Type', 'application/json').send(result).end();
-            }
-        });
-    }
-    catch (err) {
-        console.log("Error 500 - Caught an exception - " + err);
-        return res.status(500).end();
-    }
-    finally {
-        console.log("location Over and out..");
-    }
-};
-
-exports.getAllLocationsByLatLngRad = function (req, res) {
-    console.log("\nLocation Service Contacted...");
-    try {
-        if (!req.params.centreLat || !req.params.centreLng || !req.params.boundingRadius) {
-            return res.status(400).end();
-        }
-        console.log("Service Request Location Id : " + req.params.centreLat + " " + req.params.centreLng + " " + req.params.boundingRadius);
-        locationRepo.getAllLocationsByLatLngRad(req, function (err, result) {
-            if (err) {
-                console.log("Error: 500, returned " + err);
-                return res.status(500).end();
-            }
-            if (!result) {
-                console.log("Error: 404, returned " + result);
-                return res.status(404).end();
-            }
-            if (result) {
-                console.log("Status: Success | Status Code: 200 | " + result);
-                return res.status(200).set('Content-Type', 'application/json').send(result).end();
-            }
-        });
-    }
-    catch (err) {
-        console.log("Error 500 - Caught an exception - " + err);
-        return res.status(500).end();
-    }
-    finally {
-        console.log("location Over and out..");
-    }
-};
-
-exports.getAllEvents = function (req, res) {
+exports.postEvents = function (req, res) {
     console.log("\nEvents Service Contacted...");
     try {
-        if (!req) {
+        if (!req.params.eventId || !req.params.eventName || !req.params.eventDescription || !req.params.eventReleaseDate || !req.params.eventNominationStartDate || !req.params.eventNominationEndDate || !req.params.eventStartDate || !req.params.eventEndDate || !req.params.eventDemoDate || !req.params.eventFinaleDate || !req.params.eventEnabled || !req.params.eventScoring || !req.params.eventScoringMaxTotal) {
             return res.status(400).end();
         }
-        console.log("Service Request Event Id : all");
-        locationRepo.getAllEvents(req, function (err, result) {
+        console.log("Service Request Events Address : " + req.params) //.loc_address + " Area : " + req.params.loc_area + " Landmark : " + req.params.loc_landmark + " City : " + req.params.loc_city);
+        eventsRepo.postEvents(req, function (err, result) {
             if (err) {
                 console.log("Error: 500, returned " + err);
                 return res.status(500).end();
@@ -186,14 +31,14 @@ exports.getAllEvents = function (req, res) {
     }
 };
 
-exports.getCoveredLocations = function (req, res) {
-    console.log("\nLocation Service Contacted...");
+exports.deleteEventsById = function (req, res) {
+    console.log("\nEvents Service Contacted...");
     try {
-        if (!req) {
+        if (!req.params.eventId || !req.params.userEmpId || !req.params.userPassword) {
             return res.status(400).end();
         }
-        console.log("Service Request Location : Covered Locations");
-        locationRepo.getCoveredLocations(req, function (err, result) {
+        console.log("Service Request Events Id : " + req.params.eventId + " User Id : " + req.params.userEmpId);
+        eventsRepo.deleteEventsById(req, function (err, result) {
             if (err) {
                 console.log("Error: 500, returned " + err);
                 return res.status(500).end();
@@ -213,6 +58,161 @@ exports.getCoveredLocations = function (req, res) {
         return res.status(500).end();
     }
     finally {
-        console.log("location Over and out..");
+        console.log("Events Over and out..");
     }
 };
+
+exports.putEventsById = function (req, res) {
+    console.log("\nEvents Service Contacted...");
+    try {
+        if (!req.params.eventId || !req.params.eventName || !req.params.eventDescription || !req.params.eventReleaseDate || !req.params.eventNominationStartDate || !req.params.eventNominationEndDate || !req.params.eventStartDate || !req.params.eventEndDate || !req.params.eventDemoDate || !req.params.eventFinaleDate || !req.params.eventEnabled || !req.params.eventScoring || !req.params.eventScoringMaxTotal) {
+            return res.status(400).end();
+        }
+        console.log("Service Request Events Id : " + req.params) //.locationid + " Address : " + req.params.loc_address + " Area : " + req.params.loc_area + " Landmark : " + req.params.loc_landmark + " City : " + req.params.loc_city);
+        eventsRepo.putEventsById(req, function (err, result) {
+            if (err) {
+                console.log("Error: 500, returned " + err);
+                return res.status(500).end();
+            }
+            if (!result) {
+                console.log("Error: 404, returned " + result);
+                return res.status(404).end();
+            }
+            if (result) {
+                console.log("Status: Success | Status Code: 200 | " + result);
+                return res.status(200).set('Content-Type', 'application/json').send(result).end();
+            }
+        });
+    }
+    catch (err) {
+        console.log("Error 500 - Caught an exception - " + err);
+        return res.status(500).end();
+    }
+    finally {
+        console.log("Events Over and out..");
+    }
+};
+
+exports.getEventsById = function (req, res) {
+    console.log("\nEvents Service Contacted...");
+    try {
+        if (!req.params.eventId) {
+            return res.status(400).end();
+        }
+        console.log("Service Request Events Id : " + req.params.eventId);
+        eventsRepo.getEventsById(req, function (err, result) {
+            if (err) {
+                console.log("Error: 500, returned " + err);
+                return res.status(500).end();
+            }
+            if (!result) {
+                console.log("Error: 404, returned " + result);
+                return res.status(404).end();
+            }
+            if (result) {
+                console.log("Status: Success | Status Code: 200 | " + result);
+                return res.status(200).set('Content-Type', 'application/json').send(result).end();
+            }
+        });
+    }
+    catch (err) {
+        console.log("Error 500 - Caught an exception - " + err);
+        return res.status(500).end();
+    }
+    finally {
+        console.log("Events Over and out..");
+    }
+};
+
+exports.getAllEvents = function (req, res) {
+    console.log("\nEvents Service Contacted...");
+    try {
+        if (!req) {
+            return res.status(400).end();
+        }
+        console.log("Service Request Event Id : all");
+        eventsRepo.getAllEvents(req, function (err, result) {
+            if (err) {
+                console.log("Error: 500, returned " + err);
+                return res.status(500).end();
+            }
+            if (!result) {
+                console.log("Error: 404, returned " + result);
+                return res.status(404).end();
+            }
+            if (result) {
+                console.log("Status: Success | Status Code: 200 | " + result);
+                return res.status(200).set('Content-Type', 'application/json').send(result).end();
+            }
+        });
+    }
+    catch (err) {
+        console.log("Error 500 - Caught an exception - " + err);
+        return res.status(500).end();
+    }
+    finally {
+        console.log("Events Over and out..");
+    }
+};
+
+// exports.getAllLocationsByLatLngRad = function (req, res) {
+//     console.log("\nEvents Service Contacted...");
+//     try {
+//         if (!req.params.centreLat || !req.params.centreLng || !req.params.boundingRadius) {
+//             return res.status(400).end();
+//         }
+//         console.log("Service Request Events Id : " + req.params.centreLat + " " + req.params.centreLng + " " + req.params.boundingRadius);
+//         eventsRepo.getAllLocationsByLatLngRad(req, function (err, result) {
+//             if (err) {
+//                 console.log("Error: 500, returned " + err);
+//                 return res.status(500).end();
+//             }
+//             if (!result) {
+//                 console.log("Error: 404, returned " + result);
+//                 return res.status(404).end();
+//             }
+//             if (result) {
+//                 console.log("Status: Success | Status Code: 200 | " + result);
+//                 return res.status(200).set('Content-Type', 'application/json').send(result).end();
+//             }
+//         });
+//     }
+//     catch (err) {
+//         console.log("Error 500 - Caught an exception - " + err);
+//         return res.status(500).end();
+//     }
+//     finally {
+//         console.log("Events Over and out..");
+//     }
+// };
+
+// exports.getCoveredLocations = function (req, res) {
+//     console.log("\nEvents Service Contacted...");
+//     try {
+//         if (!req) {
+//             return res.status(400).end();
+//         }
+//         console.log("Service Request Events : Covered Locations");
+//         eventsRepo.getCoveredLocations(req, function (err, result) {
+//             if (err) {
+//                 console.log("Error: 500, returned " + err);
+//                 return res.status(500).end();
+//             }
+//             if (!result) {
+//                 console.log("Error: 404, returned " + result);
+//                 return res.status(404).end();
+//             }
+//             if (result) {
+//                 console.log("Status: Success | Status Code: 200 | " + result);
+//                 return res.status(200).set('Content-Type', 'application/json').send(result).end();
+//             }
+//         });
+//     }
+//     catch (err) {
+//         console.log("Error 500 - Caught an exception - " + err);
+//         return res.status(500).end();
+//     }
+//     finally {
+//         console.log("Events Over and out..");
+//     }
+// };

@@ -24,8 +24,8 @@ exports.getAllUsers = function (req, res) {
 
         var db = client.db(db_database);
 
-        db.collection(default_db_collection).find().toArray(function (findErr, result) {
-            if (findErr) throw findErr;
+        db.collection(default_db_collection).find().toArray(function (err, result) {
+            if (err) throw err;
             console.log(result);
             return res(null, result)
             client.close();
@@ -56,7 +56,7 @@ exports.getUsersById = function (req, res) {
         db.collection(default_db_collection).findOne({"userEmpId":parseInt(req)}, function(err, result) {
             if (err) throw err;
             console.log(result);       
-            return res(null,result)     
+            return res(null, result)     
         });
         client.close(); 
     }); 

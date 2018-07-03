@@ -7,12 +7,12 @@ router.get('/all', service.getAllEvents);
 
 // router.get('/coveredlocations', service.getCoveredLocations);
 
-// router.post('/:loc_address/:loc_area/:loc_landmark/:loc_city', service.addLocation);
+router.post('/:eventId/:eventName/:eventDescription/:eventReleaseDate/:eventNominationStartDate/:eventNominationEndDate/:eventStartDate/:eventEndDate/:eventDemoDate/:eventFinaleDate/:eventEnabled/:eventScoring/:eventScoringMaxTotal', service.postEvents);
 
-// router.delete('/:locationid/:uid/:upass', service.deleteLocation);
+router.delete('/:eventId/:userEmpId/:userPassword', service.deleteEventsById);
 
-// router.put('/:locationid/:loc_address/:loc_area/:loc_landmark/:loc_city', service.updateLocation);
+router.put('/:eventId/:eventName/:eventDescription/:eventReleaseDate/:eventNominationStartDate/:eventNominationEndDate/:eventStartDate/:eventEndDate/:eventDemoDate/:eventFinaleDate/:eventEnabled/:eventScoring/:eventScoringMaxTotal', service.putEventsById);
 
-// router.get('/:locationid', service.getLocationById);
+router.get('/:eventId', service.getEventsById);
 
 module.exports = router;

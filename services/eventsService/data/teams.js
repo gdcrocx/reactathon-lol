@@ -53,12 +53,27 @@ exports.getTeamsById = function(req, res) {
 
         var db = client.db(db_database);
 
-        db.collection(default_db_collection).findOne({"teamId":parseInt(req)}, function(err, result) {
+        db.collection(default_db_collection).findOne({"teamId":parseInt(req.params.teamId)}, function(err, result) {
             if (err) throw err;
             console.log(result);       
-            return res(null,result)     
+            return res(null, result)     
         });
         client.close(); 
+    }); 
+};
+
+exports.getAllTeams = function (req, res) {    
+    MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
+        if (err) throw err;
+
+        var db = client.db(db_database);
+
+        db.collection(default_db_collection).find().toArray(function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            return res(null, result)                
+        });
+        client.close();
     }); 
 };
 
