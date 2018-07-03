@@ -12,10 +12,14 @@ db.users.insertMany(
             "userOrgId": 1,           
             "isAdmin": false,
             "isUserActive": true,
-            "userRecognition": [
-                "Event 2 Runner Up",
-                "Event 1 Runner Up"
-            ]
+            "userRecognition": {
+                "awardsArr": [ "Event 2 Runner Up", "Event 1 Runner Up" ],
+                "badgesJson": {
+                    "eventsParticipationCount": 2,
+                    "eventsWonCount": 0,
+                    "eventsRunnerUpCount": 2
+                }
+            }          
         },
         {
             "userEmpId": 2,
@@ -27,10 +31,14 @@ db.users.insertMany(
             "userOrgId": 1,           
             "isAdmin": false,
             "isUserActive": true,
-            "userRecognition": [
-                "Event 2 Winner",
-                "Event 1 Runner Up"
-            ]
+            "userRecognition": {
+                "awardsArr": [ "Event 2 Winner", "Event 1 Runner Up" ],
+                "badgesJson": {
+                    "eventsParticipationCount": 2,
+                    "eventsWonCount": 1,
+                    "eventsRunnerUpCount": 1
+                }
+            }      
         },
         {
             "userEmpId": 3,
@@ -42,10 +50,14 @@ db.users.insertMany(
             "userOrgId": 2,           
             "isAdmin": true,
             "isUserActive": true,
-            "userRecognition": [
-                "Event 2 Runner Up",
-                "Event 1 Winner"
-            ]
+            "userRecognition": {
+                "awardsArr": [ "Event 2 Runner Up", "Event 1 Winner" ],
+                "badgesJson": {
+                    "eventsParticipationCount": 2,
+                    "eventsWonCount": 1,
+                    "eventsRunnerUpCount": 1
+                }
+            }   
         },
         {
             "userEmpId": 4,
@@ -57,10 +69,14 @@ db.users.insertMany(
             "userOrgId": 2,           
             "isAdmin": true,
             "isUserActive": false,
-            "userRecognition": [
-                "Event 2 Winner",
-                "Event 1 Winner"
-            ]
+            "userRecognition": {
+                "awardsArr": [ "Event 2 Winner", "Event 1 Winner" ],
+                "badgesJson": {
+                    "eventsParticipationCount": 2,
+                    "eventsWonCount": 2,
+                    "eventsRunnerUpCount": 0
+                }
+            }
         }
     ]
 )

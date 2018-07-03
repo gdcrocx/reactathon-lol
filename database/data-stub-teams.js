@@ -24,7 +24,7 @@ db.teams.insertMany(
                 }
             ],
             "teamScoreMaxTotal": 570,
-            "teamRecognition": "Event 1 Runner Up"
+            "teamRecognition": "Event 1 Runner Up"        
         },
         {
             "teamId": 2,
@@ -48,7 +48,7 @@ db.teams.insertMany(
                 }
             ],
             "teamScoreMaxTotal": 690,
-            "teamRecognition": "Event 1 Winner"
+            "teamRecognition": "Event 1 Winner"        
         },
         {
             "teamId": 3,
@@ -70,7 +70,7 @@ db.teams.insertMany(
                 }
             ],
             "teamScoreMaxTotal": 70,
-            "teamRecognition": "Event 2 Runner Up"
+            "teamRecognition": "Event 2 Runner Up"        
         },
         {
             "teamId": 4,
@@ -92,7 +92,7 @@ db.teams.insertMany(
                 }
             ],
             "teamScoreMaxTotal": 90,
-            "teamRecognition": "Event 2 Winner"
+            "teamRecognition": "Event 2 Winner"        
         },
         ,
         {
@@ -105,7 +105,8 @@ db.teams.insertMany(
             "teamEventId": 3,
             "isTeamActive": false,
             "teamScore": [],
-            "teamScoreMaxTotal": 0
+            "teamScoreMaxTotal": 0,
+            "teamRecognition": ""        
         }
     ]
 )
