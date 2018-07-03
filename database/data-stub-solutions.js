@@ -9,7 +9,7 @@ db.solutions.insertMany(
             "solutionLongDescription": "Solution 1 Long Description",            
             "solutionSubmissionDate": ISODate("2014-02-10T10:50:42.389Z"),
             "solutionSubmittedByUserEmpId": 1,
-            "solutionLikes": 12,
+            "solutionLikesCount": 12,
             "solutionKeywords": [                
                 "Cloud", "AWS", "Deployment"
             ],
@@ -24,7 +24,7 @@ db.solutions.insertMany(
             "solutionLongDescription": "Solution 2 Long Description",            
             "solutionSubmissionDate": ISODate("2014-02-10T10:50:42.389Z"),
             "solutionSubmittedByUserEmpId": 1,
-            "solutionLikes": 12,
+            "solutionLikesCount": 19,
             "solutionKeywords": [                
                 "CI/CD", "DB", "Deployment", "DevOps"
             ],
@@ -39,7 +39,7 @@ db.solutions.insertMany(
             "solutionLongDescription": "Solution 3 Long Description",            
             "solutionSubmissionDate": ISODate("2014-02-10T10:50:42.389Z"),
             "solutionSubmittedByUserEmpId": 1,
-            "solutionLikes": 12,
+            "solutionLikesCount": 5,
             "solutionKeywords": [                
                 "Nodejs", "Cloud", "Ionic"
             ],
