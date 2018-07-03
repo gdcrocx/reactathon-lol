@@ -34,11 +34,11 @@ exports.getAllSolutions = function (req, res) {
 exports.getSolutionsById = function (req, res) {
     console.log("\nSolutions Service Contacted...");
     try {
-        if(!req.params.id) {
+        if(!req.params.solutionId) {
             return res.status(400).end();
         }        
         console.log("Service Request Id : " + req.params.solutionId);
-        solutionsRepo.getUsersById (req.params.solutionId, function (err, result) {
+        solutionsRepo.getSolutionsById (req.params.solutionId, function (err, result) {
             //console.log("Request returned some value. Res : " + res + " Result : " + result);
             if(err) {
                 console.log("Error: 500, returned " + err);
@@ -185,6 +185,36 @@ exports.putLikesBySolutionsId = function (req, res) {
         return res.status(500).end();
     }
     finally {    
+        console.log("Solutions Over and out..");
+    }
+};
+
+exports.getMostLikedSolutions = function (req, res) {
+    console.log("\nSolutions Service Contacted...");
+    try {
+        if(!req.params.recordsLimit) {
+            return res.status(400).end();
+        }        
+        console.log("Service Request Id : " + req.params.recordsLimit);
+        solutionsRepo.getMostLikedSolutions (req.params.recordsLimit, function (err, result) {
+            //console.log("Request returned some value. Res : " + res + " Result : " + result);
+            if(err) {
+                console.log("Error: 500, returned " + err);
+                return res.status(500).end();                
+            }
+            if(!result) {
+                console.log("Error: 404, returned " + result);
+                return res.status(404).end();                
+            }          
+            console.log("Status: Success | Status Code: 200 | " + result);   
+            return res.status(200).set('Content-Type', 'application/json').send(result).end();      
+        });
+    }
+    catch(err) {
+        console.log("Error 500 - Caught an exception - " + err);
+        return res.status(500).end();
+    }
+    finally {
         console.log("Solutions Over and out..");
     }
 };

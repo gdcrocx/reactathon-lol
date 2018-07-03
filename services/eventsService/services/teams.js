@@ -162,11 +162,11 @@ exports.getAllTeams = function (req, res) {
 exports.getTeamsByEventId = function (req, res) {
     console.log("\nTeams Service Contacted...");  
     try {
-        if(typeof req.params.teamId == 'undefined') {
+        if(typeof req.params.teamEventId == 'undefined') {
             return res.status(400).end();
         }   
 
-        console.log("Service Request Teams Id : " + req.params.teamId + " Record Limit : " + req.params.recordsLimit);
+        console.log("Service Request Teams Id : " + req.params.teamEventId + " Record Limit : " + req.params.recordsLimit);
        
         teamsRepo.getTeamsByEventId(req, function (err, result) {            
             if(err) {

@@ -3,7 +3,7 @@ var router = require('express').Router(),
 
 router.get('/all', service.getAllUsers);
 
-router.get('/:id', service.getUsersById);
+router.get('/:userEmpId', service.getUsersById);
 
 router.post('/:userEmpId/:userVzid/:username/:userFirstName/:userLastName/:userEmailId/:userOrgId:/isAdmin:/isUserActive:/userRecognition', service.postUsers);
 

@@ -11,7 +11,7 @@ router.put('/:teamId/:teamName/:teamDescription/:teamParticipants/:teamEventId/:
 
 router.get('/:teamId', service.getTeamsById);
 
-router.get('/:teamEventId/:recordsLimit', service.getTeamsByEventId);
+router.get('/eventId/:teamEventId/:recordsLimit', service.getTeamsByEventId);
 
 // router.get('/:locationlat/:locationlng', service.getVendorParkingIdByLatLng);
 

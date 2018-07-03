@@ -224,9 +224,9 @@ exports.putUsersById = function (req, res) {
 
 //         console.log('Connected as Thread Id: ' + connection.threadId);
 
-//         console.log("CALL spDeleteUserDetails(" + connection.escape(req.params.userid) + "," + connection.escape(req.params.uid) + ");");
+//         console.log("CALL spDeleteUserDetails(" + connection.escape(req.params.userid) + "," + connection.escape(req.params.userEmpId) + ");");
 
-//         connection.query("CALL spDeleteUserDetails(" + connection.escape(req.params.userid) + "," + connection.escape(req.params.uid) + "," + connection.escape(req.params.upass) + ");", function(err, rows){          
+//         connection.query("CALL spDeleteUserDetails(" + connection.escape(req.params.userid) + "," + connection.escape(req.params.userEmpId) + "," + connection.escape(req.params.userPassword) + ");", function(err, rows){          
 //             connection.release();            
 //             if(!err) {                                
 //                 var response = JSON.stringify(rows[0]); 

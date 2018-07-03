@@ -51,9 +51,9 @@ exports.getSolutionsById = function (req, res) {
     MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
         if (err) throw err;
 
-        var db = client.db(db_database);
+        var db = client.db(db_database);        
 
-        db.collection(default_db_collection).findOne({"solutionId":parseInt(req)}, function(err, result) {
+        db.collection(default_db_collection).findOne({ "solutionId": parseInt(req) }, function(err, result) {
             if (err) throw err;
             console.log(result);       
             return res(null, result)     
@@ -64,7 +64,7 @@ exports.getSolutionsById = function (req, res) {
 
 exports.postSolutions = function (req, res) {
 
-    var commonQuery = { userEmpId : req.params.userEmpId, userVzid : req.params.userVzid, username : req.params.username, userFirstName : req.params.userFirstName, userLastName : req.params.userLastName, userEmailId : req.params.userEmailId, userOrgId : req.params.userOrgId, isAdmin : req.params.isAdmin, isUserActive : req.params.isUserActive, userRecognition : req.params.userRecognition }
+    var commonQuery = { solutionId : req.params.solutionId, solutionName : req.params.solutionName, solutionDescription : req.params.solutionDescription, solutionLongDescription : req.params.solutionLongDescription, solutionSubmissionDate : req.params.solutionSubmissionDate, solutionSubmittedByUserEmpId : req.params.solutionSubmittedByUserEmpId, solutionLikesCount : req.params.solutionLikesCount, solutionKeywords : req.params.solutionKeywords, solutionUploadPath : req.params.solutionUploadPath, solutionEventId : req.params.solutionEventId, solutionOrgId : req.params.solutionOrgId }
 
     MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
         if (err) throw err;
@@ -79,7 +79,7 @@ exports.postSolutions = function (req, res) {
 
 exports.deleteSolutionsById = function (req, res) {
 
-    var commonQuery = { userEmpId : req.params.userEmpId }
+    var commonQuery = { solutionId : req.params.solutionId }
 
     MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
         if (err) throw err;
@@ -99,22 +99,48 @@ exports.putSolutionsById = function (req, res) {
 
         var db = client.db(db_database);
         
-        db.collection(default_db_collection).updateOne({ userEmpId : req.params.userEmpId }, { $set: { userEmpId : req.params.userEmpId, userVzid : req.params.userVzid, username : req.params.username, userFirstName : req.params.userFirstName, userLastName : req.params.userLastName, userEmailId : req.params.userEmailId, userOrgId : req.params.userOrgId, isAdmin : req.params.isAdmin, isUserActive : req.params.isUserActive, userRecognition : req.params.userRecognition } }, function (err, response) {
+        db.collection(default_db_collection).updateOne({ solutionId : req.params.solutionId }, { $set: { solutionId : req.params.solutionId, solutionName : req.params.solutionName, solutionDescription : req.params.solutionDescription, solutionLongDescription : req.params.solutionLongDescription, solutionSubmissionDate : req.params.solutionSubmissionDate, solutionSubmittedByUserEmpId : req.params.solutionSubmittedByUserEmpId, solutionLikesCount : req.params.solutionLikesCount, solutionKeywords : req.params.solutionKeywords, solutionUploadPath : req.params.solutionUploadPath, solutionEventId : req.params.solutionEventId, solutionOrgId : req.params.solutionOrgId } }, function (err, response) {
             console.log("Updated");                
             return res(null, response);
         });                
     });
 };
 
-exports.putLikesBySolutionId = function (req, res) {
+exports.putLikesBySolutionsId = function (req, res) {        
     MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
         if (err) throw err;
 
-        var db = client.db(db_database);
+        var db = client.db(db_database);        
         
-        db.collection(default_db_collection).updateOne({ userEmpId : req.params.userEmpId }, { $set: { userEmpId : req.params.userEmpId, userVzid : req.params.userVzid, username : req.params.username, userFirstName : req.params.userFirstName, userLastName : req.params.userLastName, userEmailId : req.params.userEmailId, userOrgId : req.params.userOrgId, isAdmin : req.params.isAdmin, isUserActive : req.params.isUserActive, userRecognition : req.params.userRecognition } }, function (err, response) {
-            console.log("Updated");                
-            return res(null, response);
-        });                
+        db.collection(default_db_collection).find({ "solutionId": parseInt(req.params.solutionId) }).sort({ "solutionLikes": 1}).toArray(function (err, response) {      
+                        
+            var likeCount = parseInt(response[0]["solutionLikesCount"]);            
+            
+            if (req.url.indexOf('/like/') >= 0) {
+                likeCount++
+            } else {
+                likeCount--
+            }            
+
+            db.collection(default_db_collection).updateOne({ "solutionId" : parseInt(req.params.solutionId) }, { $set: { "solutionLikesCount" : likeCount } }, function (err, response) {
+                console.log("Updated");                
+                return res(null, response);
+            });
+        })      
     });
+};
+
+exports.getMostLikedSolutions = function (req, res) {    
+    MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
+        if (err) throw err;
+
+        var db = client.db(db_database);        
+
+        db.collection(default_db_collection).find().sort({ "solutionLikesCount": -1}).limit(parseInt(req)).toArray(function(err, result) {
+            if (err) throw err;
+            console.log(result);       
+            return res(null, result)     
+        });
+        client.close(); 
+    }); 
 };

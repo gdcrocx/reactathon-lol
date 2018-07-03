@@ -34,11 +34,11 @@ exports.getAllUsers = function (req, res) {
 exports.getUsersById = function (req, res) {
     console.log("\nUser Service Contacted...");
     try {
-        if(!req.params.id) {
+        if(!req.params.userEmpId) {
             return res.status(400).end();
         }        
-        console.log("Service Request Id : " + req.params.id);
-        usersRepo.getUsersById (req.params.id, function (err, result) {
+        console.log("Service Request Id : " + req.params.userEmpId);
+        usersRepo.getUsersById (req.params.userEmpId, function (err, result) {
             //console.log("Request returned some value. Res : " + res + " Result : " + result);
             if(err) {
                 console.log("Error: 500, returned " + err);
@@ -96,10 +96,10 @@ exports.postUsers = function (req, res) {
 exports.deleteUsersById = function (req, res) {
     console.log("\nUser Service Contacted...");  
     try {
-        if(typeof req.params.userid == 'undefined' || typeof req.params.uid == 'undefined' || typeof req.params.upass == 'undefined') {
+        if(typeof req.params.userid == 'undefined' || typeof req.params.userEmpId == 'undefined' || typeof req.params.userPassword == 'undefined') {
             return res.status(400).end();
         }   
-        console.log("Service Request User Id : " + req.params.userid + " User UID : " + req.params.uid);
+        console.log("Service Request User Id : " + req.params.userid + " User UID : " + req.params.userEmpId);
 
         usersRepo.deleteUsersById(req, function (err, result) {            
             if(err) {

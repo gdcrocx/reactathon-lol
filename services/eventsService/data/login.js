@@ -6,16 +6,16 @@ var db_database = config.get('db.database')
 var default_db_collection = "login"
 
 exports.getLoginVerified = function (req, res) {
-    console.log("Data : " + req.params.user_id + " " + req.params.user_pass);
+    console.log("Data : " + req.params.userEmpId + " " + req.params.userPassword);
     //console.log("Data : " + JSON.stringify(req)); 
     var mode = 0;
     try {
-        var user_id = req.params.user_id;
-        console.log("User ID : " + user_id);
-        if (isNaN(user_id)) {
+        var userEmpId = req.params.userEmpId;
+        console.log("User ID : " + userEmpId);
+        if (isNaN(userEmpId)) {
             mode = 1;
         }
-        else if (user_id / 1) {
+        else if (userEmpId / 1) {
             mode = 2;
         }
     }
@@ -34,9 +34,9 @@ exports.getLoginVerified = function (req, res) {
         }
         console.log('\nConnected as Thread Id: ' + connection.threadId);
 
-        console.log('Attempting to verify login : ' + mode + " " + req.params.user_id + " " + req.params.user_pass);
+        console.log('Attempting to verify login : ' + mode + " " + req.params.userEmpId + " " + req.params.userPassword);
 
-        connection.query("CALL spGetLoginVerified(" + connection.escape(mode) + "," + connection.escape(req.params.user_id) + "," + connection.escape(req.params.user_pass) + ");", function (err, rows) {
+        connection.query("CALL spGetLoginVerified(" + connection.escape(mode) + "," + connection.escape(req.params.userEmpId) + "," + connection.escape(req.params.userPassword) + ");", function (err, rows) {
             connection.release();
             if (!err) {
                 var response = JSON.stringify(rows[0]);

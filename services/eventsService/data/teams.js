@@ -77,8 +77,7 @@ exports.getAllTeams = function (req, res) {
     }); 
 };
 
-exports.getTeamsByEventId = function(req, res) {  
-    console.log("getTeamsByEventId")
+exports.getTeamsByEventId = function(req, res) {      
     MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
         if (err) throw err;
 
