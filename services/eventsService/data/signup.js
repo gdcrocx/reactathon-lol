@@ -1,4 +1,9 @@
-var mongoClient = require('./_mongo-client');
+var MongoClient = require('mongodb').MongoClient,
+    config = require('../config');
+
+var db_url = config.get('db.protocol') + '://' + config.get('db.host') + ':'+ config.get('db.port')
+var db_database = config.get('db.database')
+var default_db_collection = "signup"
 
 exports.getLoginVerified = function (req, res) {
     console.log("Data : " + req.params.user_id + " " + req.params.user_pass);

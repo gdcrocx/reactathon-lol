@@ -10,6 +10,10 @@ var conf = convict({
 		env: 'NODE_ENV'
 	},
 	db: {
+		protocol: {
+			doc: 'DB Connection Protocol',
+			default: 'mongodb'
+		},
 		host: {
 			doc: 'DB Host IP Address',
 			default: '127.0.0.1'

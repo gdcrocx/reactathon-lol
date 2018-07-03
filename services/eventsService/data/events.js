@@ -1,4 +1,9 @@
-var mongoClient = require('./_mongo-client');
+var MongoClient = require('mongodb').MongoClient,
+    config = require('../config');
+
+var db_url = config.get('db.protocol') + '://' + config.get('db.host') + ':'+ config.get('db.port')
+var db_database = config.get('db.database')
+var default_db_collection = "events"
 
 exports.addLocation = function (req, res) {
     pool.getConnection(function (err, connection) {
@@ -139,39 +144,18 @@ exports.getAllLocationsByLatLngRad = function (req, res) {
 };
 
 exports.getAllEvents = function (req, res) {
+    console.log(db_url)
+    MongoClient.connect(db_url,{ useNewUrlParser: true }, function (err, client) {
+        if (err) throw err;
 
-    console.log(JSON.stringify(mongoClient.events.find()));
-    // pool.getConnection(function (err, connection) {
-    //     if (err) {
-    //         connection.release();
-    //         res.json({ "code": 503, "status": "Error connecting to database.. :(" });
-    //         return;
-    //     }
-    //     console.log('\nConnected as Thread Id: ' + connection.threadId);
+        var db = client.db(db_database);
 
-    //     console.log('Attempting to get location info : all');
-
-    //     connection.query("CALL spGetAllLocations('all');", function(err, rows){          
-    //         connection.release();            
-    //         if(!err) {                                
-    //             var response = JSON.stringify(rows[0]); 
-    //             return res(null,response); 
-    //         }
-    //     });
-
-    //     // connection.query("select location_lat, location_lng from location;", function (err, rows) {
-    //     //     connection.release();
-    //     //     if (!err) {
-    //     //         var response = JSON.stringify(rows[0]);
-    //     //         return res(null, response);
-    //     //     }
-    //     // });
-
-    //     connection.on('error', function (err) {
-    //         var error = { "code": 503, "status": "Error connecting to database.. :(" };
-    //         return error;
-    //     });
-    // });
+        db.collection(default_db_collection).find().toArray(function (findErr, result) {
+            if (findErr) throw findErr;
+            console.log(result);
+            client.close();
+        });
+    }); 
 };
 
 exports.getCoveredLocations = function (req, res) {
