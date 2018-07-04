@@ -28,7 +28,8 @@ db.events.insertMany(
                     "Deployment": 100
                 }
             ],
-            "eventScoringMaxTotal": 800
+            "eventScoringMaxTotal": 800,
+            "eventLikesCount": 5
         },
         {
             "eventId": 2,
@@ -54,7 +55,8 @@ db.events.insertMany(
                     "Bow and Arrow": 25                
                 }
             ],
-            "eventScoringMaxTotal": 150
+            "eventScoringMaxTotal": 150,
+            "eventLikesCount": 3
         },
         {
             "eventId": 3,
@@ -71,7 +73,8 @@ db.events.insertMany(
             "eventFinaleDate": ISODate("2018-05-10T10:50:42.389Z"),
             "eventEnabled": false,
             "eventScoring": [],
-            "eventScoringMaxTotal": 0
+            "eventScoringMaxTotal": 0,
+            "eventLikesCount": 0
         },
         {
             "eventId": 4,
@@ -88,7 +91,8 @@ db.events.insertMany(
             "eventFinaleDate": ISODate("2018-07-14T10:50:42.389Z"),
             "eventEnabled": true,
             "eventScoring": [],
-            "eventScoringMaxTotal": 0
+            "eventScoringMaxTotal": 0,
+            "eventLikesCount": 165
         },
         {
             "eventId": 5,
@@ -105,7 +109,8 @@ db.events.insertMany(
             "eventFinaleDate": ISODate("2018-08-14T10:50:42.389Z"),
             "eventEnabled": true,
             "eventScoring": [],
-            "eventScoringMaxTotal": 0
+            "eventScoringMaxTotal": 0,
+            "eventLikesCount": 0
         }
     ]
 )
