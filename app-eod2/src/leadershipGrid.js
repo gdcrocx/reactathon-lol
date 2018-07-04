@@ -187,52 +187,53 @@ class CustomPaginationActionsTable extends React.Component {
     const { data, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-    var scorearr = [
-      {
-        teamId: 1,
-        teamName: "Team 1",
-        teamDescription: "Team 1 Description",
-        teamParticipants: [1, 2],
-        teamEventId: 1,
-        isTeamActive: true,
-        teamScore: [
-          {
-            Architecture: 80,
-            Design: 75,
-            Build: 75,
-            Dev: 90,
-            "Unit Testing": 30,
-            "System Testing": 50,
-            "Integration Testing": 80,
-            Deployment: 90
-          }
-        ],
-        teamScoreMaxTotal: 570,
-        teamRecognition: "Event 1 Runner Up"
-      },
-      {
-        teamId: 2,
-        teamName: "Team 2",
-        teamDescription: "Team 2 Description",
-        teamParticipants: [3, 4],
-        teamEventId: 1,
-        isTeamActive: true,
-        teamScore: [
-          {
-            Architecture: 100,
-            Design: 80,
-            Build: 70,
-            Dev: 85,
-            "Unit Testing": 100,
-            "System Testing": 80,
-            "Integration Testing": 90,
-            Deployment: 85
-          }
-        ],
-        teamScoreMaxTotal: 690,
-        teamRecognition: "Event 1 Winner"
-      }
-    ];
+      
+    // var scorearr = [
+    //   {
+    //     teamId: 1,
+    //     teamName: "Team 1",
+    //     teamDescription: "Team 1 Description",
+    //     teamParticipants: [1, 2],
+    //     teamEventId: 1,
+    //     isTeamActive: true,
+    //     teamScore: [
+    //       {
+    //         Architecture: 80,
+    //         Design: 75,
+    //         Build: 75,
+    //         Dev: 90,
+    //         "Unit Testing": 30,
+    //         "System Testing": 50,
+    //         "Integration Testing": 80,
+    //         Deployment: 90
+    //       }
+    //     ],
+    //     teamScoreMaxTotal: 570,
+    //     teamRecognition: "Event 1 Runner Up"
+    //   },
+    //   {
+    //     teamId: 2,
+    //     teamName: "Team 2",
+    //     teamDescription: "Team 2 Description",
+    //     teamParticipants: [3, 4],
+    //     teamEventId: 1,
+    //     isTeamActive: true,
+    //     teamScore: [
+    //       {
+    //         Architecture: 100,
+    //         Design: 80,
+    //         Build: 70,
+    //         Dev: 85,
+    //         "Unit Testing": 100,
+    //         "System Testing": 80,
+    //         "Integration Testing": 90,
+    //         Deployment: 85
+    //       }
+    //     ],
+    //     teamScoreMaxTotal: 690,
+    //     teamRecognition: "Event 1 Winner"
+    //   }
+    // ];
 
     return (
       <Paper className={classes.root}>
