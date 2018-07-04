@@ -21,4 +21,8 @@ router.put('/:eventId/:eventName/:eventDescription/:eventReleaseDate/:eventNomin
 
 router.get('/:eventId', service.getEventsById);
 
+router.put('/like/:eventId/1', service.putLikesByEventsId);
+
+router.put('/dislike/:eventId/1', service.putLikesByEventsId);
+
 module.exports = router;

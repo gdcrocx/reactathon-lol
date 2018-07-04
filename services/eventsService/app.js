@@ -46,7 +46,7 @@ router.use('/events', routes.events);
 router.use('/login', routes.login);
 router.use('/teams', routes.teams);
 router.use('/users', routes.users);
-router.use('/signup', routes.signup);
+router.use('/solutions', routes.solutions);
 
 app.use(router);
 

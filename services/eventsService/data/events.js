@@ -131,6 +131,30 @@ exports.getPreviousEvents = function (req, res) {
     }); 
 };
 
+exports.putLikesByEventsId = function (req, res) {        
+    MongoClient.connect(db_url, { useNewUrlParser: true }, function (err, client) {
+        if (err) throw err;
+
+        var db = client.db(db_database);        
+        
+        db.collection(default_db_collection).find({ "eventId": parseInt(req.params.eventId) }).sort({ "eventLikesCount": 1}).toArray(function (err, response) {      
+                        
+            var likeCount = parseInt(response[0]["eventLikesCount"]);            
+            
+            if (req.url.indexOf('/like/') >= 0) {
+                likeCount++
+            } else {
+                likeCount--
+            }            
+
+            db.collection(default_db_collection).updateOne({ "eventId" : parseInt(req.params.eventId) }, { $set: { "eventLikesCount" : likeCount } }, function (err, response) {
+                console.log("Updated");                
+                return res(null, response);
+            });
+        })      
+    });
+};
+
 // exports.getAllLocationsByLatLngRad = function (req, res) {
 //     pool.getConnection(function (err, connection) {
 //         if (err) {
