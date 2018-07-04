@@ -1,11 +1,11 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import CenteredTabs from "./hackTab";
-import CustomPaginationActionsTable from "./leadershipGrid";
+// import CustomPaginationActionsTable from "./leadershipGrid";
 
 class App extends React.Component {
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     return (
       <div>
         <br />

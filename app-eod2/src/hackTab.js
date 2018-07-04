@@ -98,7 +98,7 @@ class CenteredTabs extends React.Component {
         {value === 2 && (
           <TabContainer>
             <RecipeReviewPrevCard
-              eventdetails={this.pastEvents}
+              eventdetails={this.pastEvents}              
               hideregistration="true"
 			  tabType = "Previous"
             />

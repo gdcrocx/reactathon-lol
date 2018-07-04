@@ -18,6 +18,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Button from "@material-ui/core/Button";
 import { withRouter } from 'react-router'
+import axios from "axios";
 const styles = theme => ({
   cardRow: {
     width: "100%",
@@ -55,13 +56,18 @@ const styles = theme => ({
   }
 });
 
+var Months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+
 class RecipeReviewPrevCard extends React.Component {
-	constructor(props) {
-        super(props);
-       console.log("kk");
-        this.onChange = this.onChange.bind(this);
-        
-    }
+  constructor(props) {
+    super(props);
+    console.log("kk");
+    console.log(this)
+    this.onChange = this.onChange.bind(this);
+    this.handleExpandClick = this.handleExpandClick.bind(this);
+    this.leaderboardClick = this.leaderboardClick.bind(this);
+    this.state.like = false
+  }
 
   state = { expanded: false };
 
@@ -72,61 +78,79 @@ class RecipeReviewPrevCard extends React.Component {
     });
   }*/
 
-  handleExpandClick = () => {
+  handleExpandClick = (e) => {
+    e.preventDefault();
+    console.log(e.target.name)
     this.setState(state => ({ expanded: !state.expanded }));
   };
   leaderboardClick = () => {
     this.props.history.push('/leadergrid');
   };
-	onChange(e){
-		console.log("lll");
-		this.setState({[e.target.name]:e.target.value});
-	};
+  onChange(e) {
+    console.log("lll");
+    this.setState({ [e.target.name]: e.target.value });
+  };
+  likeToggleClick = (e) => {
+    this.setState({ like: !this.state.like})
+    var url = ""
+    console.dir(this.props.eventdetails)
+    console.dir(this.state)
+    if (this.state.like){
+      // if already liked
+      url = "http://10.74.21.47/solutions/dislike/" + this.props.eventdetails + "/1" 
+    } else {
+      url = "http://10.74.21.47/solutions/like/" + this.props.eventdetails + "/1"
+    }
+    if (url !== "undefined") {
+      axios.put(url).then(res => {
+        console.log(res)
+      });
+    }
+  }
   render() {
     const { classes } = this.props;
-    
-    var eventarr = [
-      {
-        eventId: 1,
-        eventName: "Event 1",
-        eventDescription: "Event 1 Description",
-        eventReleaseDate: "date",
-        eventNominationStartDate: "July 2, 2018",
-        eventNominationEndDate: "date",
-        eventStartDate: "July 2, 2018",
-        eventEndDate: "date",
-        eventDemoDate: "date",
-        eventFinaleDate: "date",
-        eventEnabled: "date"
-      }
-    ];
-    var extraDesc,extraDesc1,extraDesc2,iconBtn = ""; 
-	var extraDescVal,extraDesc1Val,extraDesc2Val,leaderBtn = ""; 
+
+    var eventarr = []
+    // var eventarr = [
+    //   {
+    //     eventId: 1,
+    //     eventName: "Event 1",
+    //     eventDescription: "Event 1 Description",
+    //     eventReleaseDate: "date",
+    //     eventNominationStartDate: "July 2, 2018",
+    //     eventNominationEndDate: "date",
+    //     eventStartDate: "July 2, 2018",
+    //     eventEndDate: "date",
+    //     eventDemoDate: "date",
+    //     eventFinaleDate: "date",
+    //     eventEnabled: "date"
+    //   }
+    // ];    
+    var extraDesc, extraDesc2, iconBtn = "";
+    var extraDescVal, extraDesc1Val, extraDesc2Val, leaderBtn = "";
     if (
-      this.props.eventdetails !== undefined 
+      this.props.eventdetails !== undefined
     ) {
       eventarr = this.props.eventdetails;
-	 
     }
     var me = this;
     return (
       <div className={classes.cardRow}>
-        {eventarr.map(function(item) {
-		 extraDesc2="Hackathon released on ";
-		 extraDesc2Val=item.eventReleaseDate;
-		 extraDesc = "Hackathon started on ";
-		 extraDescVal=item.eventStartDate;
-		 extraDesc1 = "Hackathon ended on ";  
-		 extraDesc1Val=item.eventEndDate;
-		 iconBtn = "iconBtn"+item.eventId;
-		 leaderBtn="leaderBtn"+item.eventId;
-		 
+        {eventarr.map(function (item) {
+          extraDesc2 = "This event was released on ";          
+          extraDesc2Val = Months[new Date(item.eventReleaseDate).getDay().toString()] + " " + new Date(item.eventReleaseDate).getDate().toString() + ", " + new Date(item.eventReleaseDate).getFullYear().toString();
+          extraDesc = "Event Schedule : ";
+          extraDescVal = Months[new Date(item.eventStartDate).getDay().toString()] + " " + new Date(item.eventStartDate).getDate().toString() + ", " + new Date(item.eventStartDate).getFullYear().toString();          
+          extraDesc1Val = Months[new Date(item.eventEndDate).getDay().toString()] + " " + new Date(item.eventEndDate).getDate().toString() + ", " + new Date(item.eventEndDate).getFullYear().toString();
+          iconBtn = "iconBtn" + item.eventId;
+          leaderBtn = "leaderBtn" + item.eventId;
+
           return (
-            <Card key={item.eventId} className={classes.card}>
+            <Card key={item.eventId} id={item.eventId} className={classes.card}>
               <CardHeader
                 avatar={
                   <Avatar aria-label="Recipe" className={classes.avatar}>
-                    R
+                    {item.eventName.charAt(0)}
                   </Avatar>
                 }
                 action={
@@ -135,20 +159,20 @@ class RecipeReviewPrevCard extends React.Component {
                   </IconButton>
                 }
                 title={item.eventName}
-                subheader={item.eventStartDate}
+                subheader={Months[new Date(item.eventStartDate).getDay().toString()] + " " + new Date(item.eventStartDate).getDate().toString() + ", " + new Date(item.eventStartDate).getFullYear().toString()}
               />
               <CardMedia
                 className={classes.media}
-                image="/static/images/cards/paella.jpg"
-                title="Contemplative Reptile"
+                image="{this.eventImageBanner}"
+                title="{this.eventName}"
               />
               <CardContent>
                 <Typography component="p">
-                 {item.eventDescription}
+                  {item.eventDescription}
                 </Typography>
               </CardContent>
               <CardActions className={classes.actions} disableActionSpacing>
-                <IconButton aria-label="Add to favorites">
+                <IconButton aria-label="Add to favorites" onClick={me.likeToggleClick}>
                   <FavoriteIcon />
                 </IconButton>
                 <IconButton aria-label="Share">
@@ -163,10 +187,11 @@ class RecipeReviewPrevCard extends React.Component {
                 >
                   Leaderboard
                 </Button>
-		<IconButton key={iconBtn}
+                <IconButton key={iconBtn} id={iconBtn}
                   className={classnames(classes.expand, {
                     [classes.expandOpen]: me.state.expanded
                   })}
+                  onChange={me.onChange}
                   onClick={me.handleExpandClick}
                   aria-expanded={me.state.expanded}
                   aria-label="Show more"
@@ -180,19 +205,16 @@ class RecipeReviewPrevCard extends React.Component {
                     {item.eventLongDescription}
                   </Typography>
                   <Typography paragraph>
-				  {extraDesc2}{extraDesc2Val}
+                    {extraDesc2}{extraDesc2Val}
                   </Typography>
-				   <Typography paragraph>
-				  {extraDesc}{extraDescVal}
-                  </Typography>
-				   <Typography paragraph>
-				  {extraDesc1}{extraDesc1Val}
+                  <Typography paragraph>
+                    {extraDesc} {extraDescVal} - {extraDesc1Val}
                   </Typography>
                 </CardContent>
               </Collapse>
             </Card>
           );
-		  
+
         })}
       </div>
     );

@@ -155,7 +155,7 @@ class RecipeReviewCard extends React.Component {
           <CardHeader
             avatar={
               <Avatar aria-label="Recipe" className={classes.avatar}>
-                R
+                {item.eventName.charAt(0)}
               </Avatar>
             }
             action={
@@ -169,7 +169,7 @@ class RecipeReviewCard extends React.Component {
           <CardMedia
             className={classes.media}
             image="/static/images/cards/paella.jpg"
-            title="Contemplative Reptile"
+            title="{this.eventName}"
           />
           <CardContent>
             <Typography component="p">

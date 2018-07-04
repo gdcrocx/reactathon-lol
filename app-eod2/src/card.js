@@ -18,6 +18,9 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Button from "@material-ui/core/Button";
 import { withRouter } from 'react-router';
+
+var Months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+
 const styles = theme => ({
   cardRow: {
     width: "100%",
@@ -58,76 +61,72 @@ const styles = theme => ({
 class RecipeReviewCard extends React.Component {
   state = { expanded: false };
 
- 
-
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
   registerNowClick = () => {
-   this.props.history.push('/form');
+    this.props.history.push('/form');
   };
 
   render() {
     const { classes } = this.props;
-    
-    var eventarr = [
-      {
-        eventId: 1,
-        eventName: "Event 1",
-        eventDescription: "Event 1 Description",
-        eventReleaseDate: "date",
-        eventNominationStartDate: "July 2, 2018",
-        eventNominationEndDate: "date",
-        eventStartDate: "July 2, 2018",
-        eventEndDate: "date",
-        eventDemoDate: "date",
-        eventFinaleDate: "date",
-        eventEnabled: "date"
-      }
-    ];
-	var extraDesc,extraDesc1,extraDesc2 = ""; 
-	var extraDescVal,extraDesc1Val,extraDesc2Val = ""; 
+
+    var eventarr = []
+    // var eventarr = [
+    //   {
+    //     eventId: 1,
+    //     eventName: "Event 1",
+    //     eventDescription: "Event 1 Description",
+    //     eventReleaseDate: "date",
+    //     eventNominationStartDate: "July 2, 2018",
+    //     eventNominationEndDate: "date",
+    //     eventStartDate: "July 2, 2018",
+    //     eventEndDate: "date",
+    //     eventDemoDate: "date",
+    //     eventFinaleDate: "date",
+    //     eventEnabled: "date"
+    //   }
+    // ];
+    var extraDesc, extraDesc1, extraDesc2 = "";
+    var extraDescVal, extraDesc1Val, extraDesc2Val = "";
     if (
-      this.props.eventdetails !== undefined 
+      this.props.eventdetails !== undefined
     ) {
       eventarr = this.props.eventdetails;
-	 
     }
-	
-	
+
     var me = this;
     return (
       <div className={classes.cardRow}>
-        {eventarr.map(function(item) {
-			 
-	  if(me.props.tabType == "Live"){
-		 extraDesc2="Hackathon released on ";
-		 extraDesc2Val=item.eventReleaseDate;
-		 extraDesc = "Gear up for the demo on "; 
-		 extraDescVal=item.eventDemoDate;
-		 extraDesc1 = "Get excited for the Grand Finale Date on ";
-		 extraDesc1Val=item.eventFinaleDate;
-	  }else if(me.props.tabType == "Upcoming"){
-		 extraDesc2="Hackathon released on ";
-		 extraDesc2Val=item.eventReleaseDate;
-		 extraDesc = "Nominations start on ";
-		 extraDescVal=item.eventNominationStartDate;
-		 extraDesc1 = "Nominations close on "; 
-		 extraDesc1Val=item.eventNominationEndDate;
-	  }else if(me.props.tabType == "Previous"){
-		 extraDesc2="Hackathon released on ";
-		 extraDesc2Val=item.eventReleaseDate;
-		 extraDesc = "Hackathon started on ";
-		 extraDescVal=item.eventStartDate;
-		 extraDesc1 = "Hackathon ended on ";  
-		 extraDesc1Val=item.eventEndDate;
-	  }
+        {eventarr.map(function (item) {
+          if (me.props.tabType === "Live") {
+            extraDesc2 = "This event is live from ";
+            extraDesc2Val = Months[new Date(item.eventReleaseDate).getDay().toString()] + " " + new Date(item.eventReleaseDate).getDate().toString() + ", " + new Date(item.eventReleaseDate).getFullYear().toString();
+            extraDesc = "Gear up for the demo on ";
+            extraDescVal = Months[new Date(item.eventDemoDate).getDay().toString()] + " " + new Date(item.eventDemoDate).getDate().toString() + ", " + new Date(item.eventDemoDate).getFullYear().toString();
+            extraDesc1 = "Get excited for the Grand Finale Date on ";
+            extraDesc1Val = Months[new Date(item.eventFinaleDate).getDay().toString()] + " " + new Date(item.eventFinaleDate).getDate().toString() + ", " + new Date(item.eventFinaleDate).getFullYear().toString();
+          } else if (me.props.tabType === "Upcoming") {
+            extraDesc2 = "This event is scheduled for ";
+            extraDesc2Val = Months[new Date(item.eventReleaseDate).getDay().toString()] + " " + new Date(item.eventReleaseDate).getDate().toString() + ", " + new Date(item.eventReleaseDate).getFullYear().toString();;
+            extraDesc = "Nominations starts on ";
+            extraDescVal = Months[new Date(item.eventNominationStartDate).getDay().toString()] + " " + new Date(item.eventNominationStartDate).getDate().toString() + ", " + new Date(item.eventNominationStartDate).getFullYear().toString();
+            extraDesc1 = "Nominations closes on ";
+            extraDesc1Val = Months[new Date(item.eventNominationEndDate).getDay().toString()] + " " + new Date(item.eventNominationEndDate).getDate().toString() + ", " + new Date(item.eventNominationEndDate).getFullYear().toString();
+          } else if (me.props.tabType === "Previous") {
+            extraDesc2 = "This event was announced on ";
+            extraDesc2Val = Months[new Date(item.eventReleaseDate).getDay().toString()] + " " + new Date(item.eventReleaseDate).getDate().toString() + ", " + new Date(item.eventReleaseDate).getFullYear().toString();;
+            extraDesc = "This event was started on ";
+            extraDescVal = Months[new Date(item.eventStartDate).getDay().toString()] + " " + new Date(item.eventStartDate).getDate().toString() + ", " + new Date(item.eventStartDate).getFullYear().toString();
+            extraDesc1 = "This event was ended on ";
+            extraDesc1Val = Months[new Date(item.eventEndDate).getDay().toString()] + " " + new Date(item.eventEndDate).getDate().toString() + ", " + new Date(item.eventEndDate).getFullYear().toString();
+          }
           return (
-            <Card id={item.eventId} className={classes.card}>
+            <Card key={item.eventId} id={item.eventId} className={classes.card}>
               <CardHeader
                 avatar={
                   <Avatar aria-label="Recipe" className={classes.avatar}>
-                    R
+                    {item.eventName.charAt(0)}
                   </Avatar>
                 }
                 action={
@@ -136,12 +135,12 @@ class RecipeReviewCard extends React.Component {
                   </IconButton>
                 }
                 title={item.eventName}
-                subheader={item.eventStartDate}
+                subheader={Months[new Date(item.eventStartDate).getDay().toString()] + " " + new Date(item.eventStartDate).getDate().toString() + ", " + new Date(item.eventStartDate).getFullYear().toString()}
               />
               <CardMedia
                 className={classes.media}
-                image="/static/images/cards/paella.jpg"
-                title="Contemplative Reptile"
+                image="{this.eventImageBanner}"
+                title="{this.eventName}"
               />
               <CardContent>
                 <Typography component="p">
@@ -181,13 +180,13 @@ class RecipeReviewCard extends React.Component {
                     {item.eventLongDescription}
                   </Typography>
                   <Typography paragraph>
-				  {extraDesc2}{extraDesc2Val}
+                    {extraDesc2}{extraDesc2Val}
                   </Typography>
-				   <Typography paragraph>
-				  {extraDesc}{extraDescVal}
+                  <Typography paragraph>
+                    {extraDesc}{extraDescVal}
                   </Typography>
-				   <Typography paragraph>
-				  {extraDesc1}{extraDesc1Val}
+                  <Typography paragraph>
+                    {extraDesc1}{extraDesc1Val}
                   </Typography>
                 </CardContent>
               </Collapse>

@@ -36,13 +36,13 @@ const CustomTableCell = withStyles(theme => ({
 }))(TableCell);
 
 class TablePaginationActions extends React.Component {
-componentDidMount() {
+  componentDidMount() {
     axios.get(`http://10.74.21.47/teams/all`).then(res => {
       const teams = res.data;
       this.currentEvents = teams;
       this.setState({ teams: teams });
     });
-}
+  }
   handleFirstPageButtonClick = event => {
     this.props.onChangePage(event, 0);
   };
@@ -86,8 +86,8 @@ componentDidMount() {
           {theme.direction === "rtl" ? (
             <KeyboardArrowRight />
           ) : (
-            <KeyboardArrowLeft />
-          )}
+              <KeyboardArrowLeft />
+            )}
         </IconButton>
         <IconButton
           onClick={this.handleNextButtonClick}
@@ -97,8 +97,8 @@ componentDidMount() {
           {theme.direction === "rtl" ? (
             <KeyboardArrowLeft />
           ) : (
-            <KeyboardArrowRight />
-          )}
+              <KeyboardArrowRight />
+            )}
         </IconButton>
         <IconButton
           onClick={this.handleLastPageButtonClick}
@@ -245,7 +245,7 @@ class CustomPaginationActionsTable extends React.Component {
                 <CustomTableCell>Ranking</CustomTableCell>
                 <CustomTableCell>Team</CustomTableCell>
                 <CustomTableCell numeric>Score</CustomTableCell>
-                {Object.keys(scorearr[0].teamScore[0]).map(function(item) {
+                {Object.keys(scorearr[0].teamScore[0]).map(function (item) {
                   return <CustomTableCell numeric>{item}</CustomTableCell>;
                 })}
               </TableRow>
@@ -261,7 +261,7 @@ class CustomPaginationActionsTable extends React.Component {
                         {n.teamName}
                       </TableCell>
                       <TableCell numeric>{n.teamScoreMaxTotal}</TableCell>
-                      {Object.values(n.teamScore[0]).map(function(item) {
+                      {Object.values(n.teamScore[0]).map(function (item) {
                         return (
                           <CustomTableCell numeric>{item}</CustomTableCell>
                         );
