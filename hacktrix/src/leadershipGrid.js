@@ -18,6 +18,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { withRouter } from 'react-router';
 import axios from "axios";
+
 const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
@@ -36,8 +37,8 @@ const CustomTableCell = withStyles(theme => ({
 }))(TableCell);
 
 class TablePaginationActions extends React.Component {
-	
-  
+
+
   handleFirstPageButtonClick = event => {
     this.props.onChangePage(event, 0);
   };
@@ -57,10 +58,8 @@ class TablePaginationActions extends React.Component {
     );
   };
 
-  
-
   render() {
-    const { classes, count, page, rowsPerPage, theme,id } = this.props;
+    const { classes, count, page, rowsPerPage, theme, id } = this.props;
 
     return (
       <div className={classes.root}>
@@ -142,36 +141,41 @@ const styles = theme => ({
   }
 });
 
+const baseUrl = "http://127.0.0.1:8081"
+const urls = {
+  getTeamsByEventId: "/teams/eventId/"
+}
+
 class CustomPaginationActionsTable extends React.Component {
-	
+
   constructor(props) {
     super(props);
     this.state = {
-      data: [
-        createData("Cupcake", 305, 3.7),
-        createData("Donut", 452, 25.0),
-        createData("Eclair", 262, 16.0),
-        createData("Frozen yoghurt", 159, 6.0),
-        createData("Gingerbread", 356, 16.0),
-        createData("Honeycomb", 408, 3.2),
-        createData("Ice cream sandwich", 237, 9.0),
-        createData("Jelly Bean", 375, 0.0),
-        createData("KitKat", 518, 26.0),
-        createData("Lollipop", 392, 0.2),
-        createData("Marshmallow", 318, 0),
-        createData("Nougat", 360, 19.0),
-        createData("Oreo", 437, 18.0)
-      ].sort((a, b) => (a.calories < b.calories ? -1 : 1)),
+      // data: [
+      //   createData("Cupcake", 305, 3.7),
+      //   createData("Donut", 452, 25.0),
+      //   createData("Eclair", 262, 16.0),
+      //   createData("Frozen yoghurt", 159, 6.0),
+      //   createData("Gingerbread", 356, 16.0),
+      //   createData("Honeycomb", 408, 3.2),
+      //   createData("Ice cream sandwich", 237, 9.0),
+      //   createData("Jelly Bean", 375, 0.0),
+      //   createData("KitKat", 518, 26.0),
+      //   createData("Lollipop", 392, 0.2),
+      //   createData("Marshmallow", 318, 0),
+      //   createData("Nougat", 360, 19.0),
+      //   createData("Oreo", 437, 18.0)
+      // ].sort((a, b) => (a.calories < b.calories ? -1 : 1)),
       page: 0,
       rowsPerPage: 5
     };
   }
-  
+
   teams = [];
-  
+
   componentDidMount() {
-	  var urlVal = window.document.location.pathname.substring(12,window.document.location.pathname.length)+'/10';
-    axios.get('http://10.74.21.47/teams/eventId/'+urlVal).then(res => {
+    var urlVal = window.document.location.pathname.substring(12, window.document.location.pathname.length) + '/10';
+    axios.get(baseUrl + urls.getTeamsByEventId + urlVal).then(res => {
       const teams = res.data;
       this.teams = teams;
       this.setState({ teams: teams });
@@ -185,7 +189,7 @@ class CustomPaginationActionsTable extends React.Component {
   handleChangeRowsPerPage = event => {
     this.setState({ rowsPerPage: event.target.value });
   };
-	backClick = () => {
+  backClick = () => {
     this.props.history.push("/");
   };
   render() {
@@ -193,7 +197,7 @@ class CustomPaginationActionsTable extends React.Component {
     const { data, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-	  
+
     var teamarr = [
       {
         teamId: 1,
@@ -240,8 +244,8 @@ class CustomPaginationActionsTable extends React.Component {
         teamRecognition: "Event 1 Winner"
       }
     ];
-	
-    if(this.teams[0] !== undefined){
+
+    if (this.teams[0] !== undefined) {
       teamarr = this.teams;
     }
     var count = 0
@@ -266,7 +270,7 @@ class CustomPaginationActionsTable extends React.Component {
               {teamarr
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
-                  {count++}
+                  { count++ }
                   return (
                     <TableRow key={n.teamId}>
                       <TableCell numeric>{count}</TableCell>

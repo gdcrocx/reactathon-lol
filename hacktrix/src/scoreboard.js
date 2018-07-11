@@ -27,72 +27,78 @@ const styles = {
   }
 };
 
-class SimpleMediaCard extends React.Component {  
+const baseUrl = "http://127.0.0.1:8081"
+const urls = {
+  getMostAwarded: "/users/mostAwarded",
+  getMostBadges: "/users/mostBadges"
+}
+
+class SimpleMediaCard extends React.Component {
 
   mostAwardedArr = [];
+
   componentDidMount() {
 
-    axios.get(`http://10.74.21.47/users/mostAwarded/10`).then(res => {
-     const mostAwardedArr = res.data;      
-       this.mostAwardedArr = mostAwardedArr;
-       this.setState({ mostAwardedArr: mostAwardedArr });
-    });   
+    axios.get(baseUrl + urls.getMostAwarded + '/10').then(res => {
+      const mostAwardedArr = res.data;
+      this.mostAwardedArr = mostAwardedArr;
+      this.setState({ mostAwardedArr: mostAwardedArr });
+    });
 
   }
 
-  // axios.get(`http://10.74.21.47/users/mostAwarded/3`).then(res => {
+  // axios.get(baseUrl + urls.getMostBadges + '/10').then(res => {
   //   const events = res.data;
   //   this.upcomingEvents = events;
   //   this.setState({ events: events });
   // });
 
   render() {
-    const { classes } = this.props;  
+    const { classes } = this.props;
     var mostAwarded = [];
     if (
       this.mostAwardedArr !== undefined
     ) {
       mostAwarded = this.mostAwardedArr;
     }
-    var count = 0    
+    var count = 0
     // console.log(mostAwarded)
-    
-    return (         
-      <div>   
-        <br/>
-        <br/>
-        <Typography variant="title">Score Board</Typography>              
-        <br/>
-        <br/>
+
+    return (
+      <div>
+        <br />
+        <br />
+        <Typography variant="title">Score Board</Typography>
+        <br />
+        <br />
         {mostAwarded.map(function (item) {
-          {count++}
-          return (  
-            <div>                     
+          { count++ }
+          return (
+            <div>
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
                   image="{}"
-                  // title="{}"
+                // title="{}"
                 />
                 <CardContent>
                   <Typography gutterBottom variant="headline" component="h2">
                     Ranking : {count}
                   </Typography>
-                  <Typography component="p">                    
+                  <Typography component="p">
                     No.of Hackathons Participated : {item.userRecognition.badgesJson.eventsParticipationCount} <br /><br />
                     No.of Hackathons Won : {item.userRecognition.badgesJson.eventsWonCount}
                   </Typography>
                 </CardContent>
-              </Card>   
-              </div>            
-               
+              </Card>
+            </div>
           );
         })}
       </div>
     );
   }
-}   
-  
+}
+
 
 SimpleMediaCard.propTypes = {
   classes: PropTypes.object.isRequired

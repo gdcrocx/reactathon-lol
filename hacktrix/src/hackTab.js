@@ -15,6 +15,13 @@ const styles = {
   }
 };
 
+const baseUrl = "http://127.0.0.1:8081"
+const urls = {
+  getLiveEvents: "/events/live",
+  getUpcomingEvents: "/events/upcoming",
+  getPreviousEvents: "/events/previous"
+}
+
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -36,23 +43,25 @@ class CenteredTabs extends React.Component {
   pastEvents = [];
 
   componentDidMount() {
-    axios.get(`http://10.74.21.47/events/live`).then(res => {
+
+    axios.get(baseUrl + urls.getLiveEvents).then(res => {
       const events = res.data;
       this.currentEvents = events;
       this.setState({ events: events });
     });
 
-    axios.get(`http://10.74.21.47/events/upcoming`).then(res => {
+    axios.get(baseUrl + urls.getUpcomingEvents).then(res => {
       const events = res.data;
       this.upcomingEvents = events;
       this.setState({ events: events });
     });
 
-    axios.get(`http://10.74.21.47/events/previous`).then(res => {
+    axios.get(baseUrl + urls.getPreviousEvents).then(res => {
       const events = res.data;
       this.pastEvents = events;
       this.setState({ events: events });
     });
+
   }
 
   handleChange = (event, value) => {
@@ -82,7 +91,7 @@ class CenteredTabs extends React.Component {
             <RecipeReviewCard
               eventdetails={this.currentEvents}
               hideregistration="false"
-			  tabType = "Live"
+              tabType="Live"
             />
           </TabContainer>
         )}
@@ -91,16 +100,16 @@ class CenteredTabs extends React.Component {
             <RecipeReviewCard
               eventdetails={this.upcomingEvents}
               hideregistration="false"
-			  tabType = "Upcoming"
+              tabType="Upcoming"
             />
           </TabContainer>
         )}
         {value === 2 && (
           <TabContainer>
             <RecipeReviewPrevCard
-              eventdetails={this.pastEvents}              
+              eventdetails={this.pastEvents}
               hideregistration="true"
-			  tabType = "Previous"
+              tabType="Previous"
             />
           </TabContainer>
         )}

@@ -58,22 +58,28 @@ const styles = theme => ({
   }
 });
 
-var Months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+const baseUrl = "http://127.0.0.1:8081"
+const urls = {
+  putLikeSolution: "/solutions/like/",
+  putDislikeSolution: "/solutions/dislike/"
+}
+
+var Months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
 class RecipeReviewPrevCard extends React.Component {
   constructor(props) {
     super(props);
-    console.log("kk");
-    console.log(this)
+    // console.log("kk");
+    // console.log(this)
     this.onChange = this.onChange.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
     this.leaderboardClick = this.leaderboardClick.bind(this);
     this.state.like = false
-	this.state.eventId=0
+    this.state.eventId = 0
   }
 
   state = { expanded: false };
-  
+
 
   /*componentDidMount() {
     axios.get(`https://demo2123069.mockable.io/events`).then(res => {
@@ -88,23 +94,23 @@ class RecipeReviewPrevCard extends React.Component {
     this.setState(state => ({ expanded: !state.expanded }));
   };
   leaderboardClick = (id) => {
-	console.log(id);
-    this.props.history.push('/leadergrid/'+id);
+    console.log(id);
+    this.props.history.push('/leadergrid/' + id);
   };
   onChange(e) {
-    console.log("lll");
+    // console.log("lll");
     this.setState({ [e.target.name]: e.target.value });
   };
   likeToggleClick = (e) => {
-    this.setState({ like: !this.state.like})
+    this.setState({ like: !this.state.like })
     var url = ""
-    console.dir(this.props.eventdetails)
-    console.dir(this.state)
-    if (this.state.like){
+    // console.dir(this.props.eventdetails)
+    // console.dir(this.state)
+    if (this.state.like) {
       // if already liked
-      url = "http://10.74.21.47/solutions/dislike/" + this.props.eventdetails + "/1" 
+      url = baseUrl + urls.putDislikeSolution + this.props.eventdetails + "/1"
     } else {
-      url = "http://10.74.21.47/solutions/like/" + this.props.eventdetails + "/1"
+      url = baseUrl + urls.putLikeSolution + this.props.eventdetails + "/1"
     }
     if (url !== "undefined") {
       axios.put(url).then(res => {
@@ -114,7 +120,7 @@ class RecipeReviewPrevCard extends React.Component {
   }
   render() {
     const { classes } = this.props;
-console.log(this.props);
+    console.log(this.props);
     var eventarr = []
     // var eventarr = [
     //   {
@@ -142,7 +148,7 @@ console.log(this.props);
 
     return (
       <div className={classes.cardRow}>
-        {eventarr.map(function(item) {
+        {eventarr.map(function (item) {
           return (
             <PrevCardItem tabType={me.props.tabType} item={item}></PrevCardItem>
           );
