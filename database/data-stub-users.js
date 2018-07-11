@@ -5,6 +5,7 @@ db.users.insertMany(
         {
             "userEmpId": 2474763,
             "userVzid": "v549337",
+            "userImage": "./img/user1.jpg",
             "username": "Saran",
             "userPassword": "Password",
             "userFirstName": "Saran",
@@ -27,6 +28,7 @@ db.users.insertMany(
         {
             "userEmpId": 2474756,
             "userVzid": "SubitK",
+            "userImage": "./img/user2.png",
             "username": "Subitcha",
             "userPassword": "Password",
             "userFirstName": "Subitcha",
@@ -49,6 +51,7 @@ db.users.insertMany(
         {
             "userEmpId": 2458697,
             "userVzid": "SathisD",
+            "userImage": "./img/user3.png",
             "username": "Sathish",
             "userPassword": "Password",
             "userFirstName": "Sathish",
@@ -71,9 +74,10 @@ db.users.insertMany(
         {
             "userEmpId": 2456358,
             "userVzid": "HemaL",
+            "userImage": "./img/user4.jpg",
             "username": "Hema",
             "userPassword": "Password",
-            "userFirstName": "Hemalata",
+            "userFirstName": "Hema L",
             "userLastName": "V",
             "userEmailId": "hemalata.V@verizon.com",
             "userOrgId": 3,           
@@ -93,6 +97,7 @@ db.users.insertMany(
         {
             "userEmpId": 2548965,
             "userVzid": "George",
+            "userImage": "./img/user5.jpg",
             "username": "davisG",
             "userPassword": "Password",
             "userFirstName": "George",
@@ -115,6 +120,7 @@ db.users.insertMany(
         {
             "userEmpId": 2456359,
             "userVzid": "HemalL",
+            "userImage": "./img/user6.png",
             "username": "Hemalata",
             "userPassword": "Password",
             "userFirstName": "Hemalata",
@@ -137,6 +143,7 @@ db.users.insertMany(
         {
             "userEmpId": 2548965,
             "userVzid": "Karthick",
+            "userImage": "./img/user8.jpg",
             "username": "S",
             "userPassword": "Password",
             "userFirstName": "Karthick",
@@ -159,6 +166,7 @@ db.users.insertMany(
         {
             "userEmpId": 2412559,
             "userVzid": "Anithaj",
+            "userImage": "./img/user7.png",
             "username": "Anitha",
             "userPassword": "Password",
             "userFirstName": "Anitha",
@@ -181,6 +189,7 @@ db.users.insertMany(
         {
             "userEmpId": 2548665,
             "userVzid": "Deepshika",
+            "userImage": "./img/user11.png",
             "username": "Deepshika",
             "userPassword": "Password",
             "userFirstName": "Deepshika",
@@ -203,6 +212,7 @@ db.users.insertMany(
         {
             "userEmpId": 2412559,
             "userVzid": "Geetha",
+            "userImage": "./img/user10.jpg",
             "username": "Geethap",
             "userPassword": "Password",
             "userFirstName": "Geetha",
