@@ -1,30 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import RecipeReviewCard from "./card";
-import MenuAppBar from "./title";
-import Typography from "@material-ui/core/Typography";
-import CenteredTabs from "./hackTab";
-import CustomPaginationActionsTable from "./leadershipGrid";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import Button from '@material-ui/core/Button';
+import logo from './logo.svg';
+import './App.css';
+import RecipeReviewCard from './components/event-card.jsx';
 
-class App extends React.Component {
+class App extends Component {
   render() {
-    const { classes } = this.props;
     return (
-      <div>
-        <MenuAppBar />
-        <br />
-        <Typography component="p" variant="body2" style={{ fontSize: "17px" }}>
-          <center>
-            Hacktrix is the one stop shop for all the Live, <br />Upcoming and
-            Previous Hackathons.
-            <br />Free and open to all ! Crack the Code !
-          </center>
-        </Typography>
-        <br />
-        <CenteredTabs />
-        <br />
-        <CustomPaginationActionsTable />
+      <div className="App">
+        <RecipeReviewCard></RecipeReviewCard>
       </div>
     );
   }
