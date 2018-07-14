@@ -28,7 +28,9 @@ const actionsStyles = theme => ({
 const CustomTableCell = withStyles(theme => ({
   head: {
     backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white
+    color: theme.palette.text.primary,
+    fontWeight: 700,
+    fontSize: 15
   },
   body: {
     fontSize: 14

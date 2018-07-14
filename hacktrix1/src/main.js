@@ -4,6 +4,7 @@ import Form from "./form";
 import App from "./app";
 import TablePaginationActions from "./leadershipGrid"
 import SimpleMediaCard from "./scoreboard"
+import Solutions from "./solutions"
 // import { browserHistory } from "history";
 
 // The Main component renders one of the three provided
@@ -18,6 +19,7 @@ const Main = () => (
       <Route exact path="/form" component={Form} />
       <Route exact path="/leadergrid/:leaderid" component={TablePaginationActions} />
       <Route exact path="/scoreboard" component={SimpleMediaCard} />
+      <Route exact path="/solutions" component={Solutions} />
     </Switch>
   </main>
 );

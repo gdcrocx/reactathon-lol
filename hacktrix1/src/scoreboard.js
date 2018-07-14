@@ -9,6 +9,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 // import CustomPaginationScoreTable from "./scoregrid";
 import axios from "axios";
+import config from "./config"
 
 const styles = {
   card: {
@@ -27,7 +28,7 @@ const styles = {
   }
 };
 
-const baseUrl = "http://127.0.0.1:8081"
+const baseUrl = config.get('service.protocol') + "://" + config.get('service.host') + ":" + config.get('service.port')
 const urls = {
   getMostAwarded: "/users/mostAwarded",
   getMostBadges: "/users/mostBadges"

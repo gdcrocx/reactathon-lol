@@ -18,7 +18,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Button from "@material-ui/core/Button";
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router';
 import axios from "axios";
 import config from "./config"
 
@@ -59,7 +59,7 @@ const styles = theme => ({
   avatar: {
     backgroundColor: red[500]
   },
-  like: {    
+  like: {
     color: red[500]
   },
   dislike: {
@@ -69,12 +69,14 @@ const styles = theme => ({
 
 const baseUrl = config.get('service.protocol') + "://" + config.get('service.host') + ":" + config.get('service.port')
 const urls = {
-  putLikeEvent: "/events/like/",
-  putDislikeEvent: "/events/dislike/"
+  putLikeSolution: "/solutions/like/",
+  putDislikeSolution: "/solutions/dislike/"
 }
 
-class PrevCardItem extends React.Component {
+class SolutionsCardItem extends React.Component {
   
+  // state = { expanded: false };
+
   constructor(props) {
     super(props);
     this.state = { expanded: false, like: false };
@@ -82,63 +84,70 @@ class PrevCardItem extends React.Component {
 
   handleExpandClick = (e) => {
     e.preventDefault();
-    // console.log("Expand Target: " + e.target.name)
     this.setState(state => ({ expanded: !state.expanded }));
-  };
-  leaderboardClick = (id) => {
-    // console.log("Leader Grid Id: " + id);
-    this.props.history.push('/leadergrid/' + id);
   };
   onChange(e) {
     // console.log("lll");
     this.setState({ [e.target.name]: e.target.value });
   };
+  downloadClick = () => {
+    alert("Downloading File now...")
+  };
   likeToggleClick = (e) => {
     this.setState({ like: !this.state.like })
     var url = ""
 
-    if (typeof(this.state.like) != "undefined") {    
+    if (typeof (this.state.like) != "undefined") {
       
-      this.setState({ like: !this.state.like })      
+      this.setState({ like: !this.state.like })
 
-      if (!this.state.like){
-        url = baseUrl + urls.putLikeEvent + this.props.item.eventId + "/1"
+      if (!this.state.like) {
+        url = baseUrl + urls.putLikeSolution + this.props.item.solutionId + "/1"
       }
       else {
-        url = baseUrl + urls.putDislikeEvent + this.props.item.eventId + "/1"
+        url = baseUrl + urls.putDislikeSolution + this.props.item.solutionId + "/1"
       }
     }
 
     if (url !== "undefined") {
-      axios.put(url).then(res => {
+      axios.get(url).then(res => {
         console.log("Response: " + JSON.stringify(res))
       });
     }
-  }
+  };
 
   render() {
     const { classes } = this.props;
 
-    var extraDesc, extraDesc2, iconBtn = "";
-    var extraDescVal, extraDesc1Val, extraDesc2Val, leaderBtn = "";
+    var extraDesc1, extraDesc2, extraDesc3, extraDesc4 = "";
+    var extraDesc1Val, extraDesc2Val, extraDesc3Val = "";
 
     var me = this;
     var item = this.props.item;
-    // console.log(item);
 
-    extraDesc2 = "This event was released on ";
-    extraDesc2Val = Months[new Date(item.eventReleaseDate).getDay().toString()] + " " + new Date(item.eventReleaseDate).getDate().toString() + ", " + new Date(item.eventReleaseDate).getFullYear().toString();
-    extraDesc = "Event Schedule : ";
-    extraDescVal = Months[new Date(item.eventStartDate).getDay().toString()] + " " + new Date(item.eventStartDate).getDate().toString() + ", " + new Date(item.eventStartDate).getFullYear().toString();
-    extraDesc1Val = Months[new Date(item.eventEndDate).getDay().toString()] + " " + new Date(item.eventEndDate).getDate().toString() + ", " + new Date(item.eventEndDate).getFullYear().toString();
-    iconBtn = "iconBtn" + item.eventId;
+    // console.log(item);
+    // console.log("This",this)
+    // console.log(this.props.events)
+
+    extraDesc1 = "This solution was submitted on ";
+    extraDesc1Val = Months[new Date(item.solutionSubmissionDate).getDay().toString()] + " " + new Date(item.solutionSubmissionDate).getDate().toString() + ", " + new Date(item.solutionSubmissionDate).getFullYear().toString();
+    extraDesc2 = " as part of " + this.props.events[0].eventName
+    extraDesc3 = "Keywords : "
+    extraDesc3Val = item.solutionKeywords.map(function (item) {
+      return (
+        item + ", "
+      );
+    })
+    if (item.solutionUploadPath) {
+      extraDesc4 = "The solution is available at " + item.solutionUploadPath;
+    }
 
     return (
-      <Card key={item.eventId} id={item.eventId} className={classes.card}>
+      <Card key={item.solutionId} id={item.solutionId} className={classes.card}>
         <CardHeader
           avatar={
-            <Avatar aria-label={item.eventName} className={classes.avatar}>
-              {item.eventName.charAt(0)}
+            <Avatar aria-label={item.solutionName} className={classes.avatar}>
+              {item.solutionName.charAt(0)}
             </Avatar>
           }
           action={
@@ -146,40 +155,39 @@ class PrevCardItem extends React.Component {
               <MoreVertIcon />
             </IconButton>
           }
-          title={item.eventName}
-          subheader={Months[new Date(item.eventStartDate).getDay().toString()] + " " + new Date(item.eventStartDate).getDate().toString() + ", " + new Date(item.eventStartDate).getFullYear().toString()}
+          title={item.solutionName}
+          subheader={Months[new Date(item.solutionSubmissionDate).getDay().toString()] + " " + new Date(item.solutionSubmissionDate).getDate().toString() + ", " + new Date(item.solutionSubmissionDate).getFullYear().toString()}
         />
         <CardMedia
           className={classes.media}
-          image={item.eventImageBanner}
-          title={item.eventName}
+          // image={item.solutionImageBanner}
+          title={item.solutionName}
         />
         <CardContent>
           <Typography component="p">
-            {item.eventDescription}
+            {item.solutionDescription}
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
           <IconButton aria-label="Add to favorites" onClick={me.likeToggleClick}>
-            <FavoriteIcon className={classnames({[classes.like]: this.state.like, [classes.dislike]: !this.state.like})} />
+            <FavoriteIcon className={classnames({ [classes.like]: this.state.like, [classes.dislike]: !this.state.like })} />
           </IconButton>
           <IconButton aria-label="Share">
             <ShareIcon />
           </IconButton>
 
-          <Button id={item.eventId}
+          <Button
             className={classes.button}
             variant="contained"
             color="primary"
-            onClick={() => me.leaderboardClick(item.eventId)}
+            onClick={me.downloadClick}
           >
-            Leaderboard
+            Download
                 </Button>
-          <IconButton key={item._id} id={item._id}
+          <IconButton
             className={classnames(classes.expand, {
               [classes.expandOpen]: me.state.expanded
             })}
-            onChange={me.onChange}
             onClick={me.handleExpandClick}
             aria-expanded={me.state.expanded}
             aria-label="Show more"
@@ -190,13 +198,16 @@ class PrevCardItem extends React.Component {
         <Collapse in={me.state.expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography paragraph variant="body2">
-              {item.eventLongDescription}
+              {item.solutionLongDescription}
             </Typography>
             <Typography paragraph>
-              {extraDesc2}{extraDesc2Val}
+              {extraDesc1}{extraDesc1Val}{extraDesc2}{extraDesc2Val}
+            </Typography>
+            <Typography paragraph variant="button">
+              {extraDesc3}{extraDesc3Val}
             </Typography>
             <Typography paragraph>
-              {extraDesc} {extraDescVal} - {extraDesc1Val}
+              {extraDesc4}
             </Typography>
           </CardContent>
         </Collapse>
@@ -205,4 +216,4 @@ class PrevCardItem extends React.Component {
   }
 }
 
-export default withStyles(styles)(withRouter(PrevCardItem));
+export default withStyles(styles)(withRouter(SolutionsCardItem));

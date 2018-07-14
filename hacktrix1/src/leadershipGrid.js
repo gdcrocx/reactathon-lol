@@ -18,6 +18,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { withRouter } from 'react-router';
 import axios from "axios";
+import config from "./config"
 
 const actionsStyles = theme => ({
   root: {
@@ -28,8 +29,10 @@ const actionsStyles = theme => ({
 });
 const CustomTableCell = withStyles(theme => ({
   head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.text.primary,
+    fontWeight: 700,
+    fontSize: 15
   },
   body: {
     fontSize: 14
@@ -140,7 +143,7 @@ const styles = theme => ({
   }
 });
 
-const baseUrl = "http://127.0.0.1:8081"
+const baseUrl = config.get('service.protocol') + "://" + config.get('service.host') + ":" + config.get('service.port')
 const urls = {
   getTeamsByEventId: "/teams/eventId/"
 }
@@ -254,7 +257,7 @@ class CustomPaginationActionsTable extends React.Component {
         <br />
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
-            <TableHead>
+            <TableHead color="secondary">
               <TableRow>
                 <CustomTableCell>Ranking</CustomTableCell>
                 <CustomTableCell>Team</CustomTableCell>

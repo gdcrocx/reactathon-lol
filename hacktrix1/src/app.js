@@ -11,14 +11,18 @@ const styles = theme => ({
     margin: theme.spacing.unit,
     float: "right"
   }
-}); 
+});
 
 class App extends React.Component {
 
-  scoreClick = () => {    
-    this.props.history.push("/scoreboard");    
+  scoreClick = () => {
+    this.props.history.push("/scoreboard");
   };
-  
+
+  solutionsClick = () => {
+    this.props.history.push("/solutions");
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -31,10 +35,14 @@ class App extends React.Component {
             <br />Free and open to all ! Crack the Code !
           </center>
         </Typography>
-        <br />        
+        <br />
         <Button className={classes.button}
-        color = "secondary"
-        onClick={this.scoreClick}>Score Board
+          color="secondary"
+          onClick={this.scoreClick}>Score Board
+        </Button>
+        <Button className={classes.button}
+          color="primary"
+          onClick={this.solutionsClick}>Solutions
         </Button>
         <CenteredTabs />
       </div>

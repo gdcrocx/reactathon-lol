@@ -1,0 +1,8 @@
+//PRODUCTION CONFIGURATION
+{	
+    "service": {
+        "protocol": "http",
+        "host": "10.74.21.47",
+        "port": "8081"
+    }
+}

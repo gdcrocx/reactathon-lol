@@ -12,6 +12,7 @@ import { withStyles } from "@material-ui/core/styles";
 // import IconButton from "@material-ui/core/IconButton";
 // import Typography from "@material-ui/core/Typography";
 import red from "@material-ui/core/colors/red";
+import grey from "@material-ui/core/colors/grey";
 // import FavoriteIcon from "@material-ui/icons/Favorite";
 // import ShareIcon from "@material-ui/icons/Share";
 // import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -20,6 +21,8 @@ import red from "@material-ui/core/colors/red";
 import { withRouter } from 'react-router'
 import axios from "axios";
 import PrevCardItem from "./prevCardItem";
+import color from "../node_modules/@material-ui/core/colors/purple";
+import config from "./config"
 
 const styles = theme => ({
   cardRow: {
@@ -55,10 +58,16 @@ const styles = theme => ({
   },
   avatar: {
     backgroundColor: red[500]
+  },
+  like: {    
+    color: red[500]
+  },
+  dislike: {
+    color: grey[500]
   }
 });
 
-const baseUrl = "http://127.0.0.1:8081"
+const baseUrl = config.get('service.protocol') + "://" + config.get('service.host') + ":" + config.get('service.port')
 const urls = {
   putLikeSolution: "/solutions/like/",
   putDislikeSolution: "/solutions/dislike/"
@@ -90,11 +99,11 @@ class RecipeReviewPrevCard extends React.Component {
 
   handleExpandClick = (e) => {
     e.preventDefault();
-    console.log(e.target.name)
+    console.log("handleExpandClick - " + e.target.name)
     this.setState(state => ({ expanded: !state.expanded }));
   };
   leaderboardClick = (id) => {
-    console.log(id);
+    console.log("ID - " + id);
     this.props.history.push('/leadergrid/' + id);
   };
   onChange(e) {
@@ -104,23 +113,35 @@ class RecipeReviewPrevCard extends React.Component {
   likeToggleClick = (e) => {
     this.setState({ like: !this.state.like })
     var url = ""
-    // console.dir(this.props.eventdetails)
-    // console.dir(this.state)
-    if (this.state.like) {
-      // if already liked
-      url = baseUrl + urls.putDislikeSolution + this.props.eventdetails + "/1"
-    } else {
-      url = baseUrl + urls.putLikeSolution + this.props.eventdetails + "/1"
+    console.log("This Object - ")
+    console.dir(this.props.item.eventLikesCount)
+    console.log("State Object - ")
+    console.dir(this.state)
+    console.log("State Like - " + this.state.like)
+
+    if (this.state.like) {           
+      
+      this.setState(state => ({ like: !state.like }))
+
+      if (this.state.like){
+        // url = baseUrl + urls.putLikeSolution + this.props.item.eventId + "/1"
+      }
+      else {
+        // url = baseUrl + urls.putDislikeSolution + this.props.item.eventId + "/1"
+      }
     }
-    if (url !== "undefined") {
-      axios.put(url).then(res => {
-        console.log(res)
-      });
-    }
+
+    console.log("Final State Like - " + this.state.like)
+
+    // if (url !== "undefined") {
+    //   axios.put(url).then(res => {
+    //     console.log("Response: " + res)
+    //   });
+    // }
   }
   render() {
     const { classes } = this.props;
-    console.log(this.props);
+    console.log("Props - " + this.props);
     var eventarr = []
     // var eventarr = [
     //   {
