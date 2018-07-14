@@ -1,8 +1,8 @@
 var express = require('express'),
-    bodyParser = require('body-parser'),
-    config = require('./config'),
-    routes = require('./routes'),
-    cors = require('cors');
+    bodyParser = require('body-parser'),    
+    routes = require('./routes');
+    // config = require('./config'),
+    // cors = require('cors');
 
 var app = express();
 

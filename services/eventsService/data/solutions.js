@@ -111,8 +111,10 @@ exports.putLikesBySolutionsId = function (req, res) {
         if (err) throw err;
 
         var db = client.db(db_database);        
+
+        console.log(req.params)
         
-        db.collection(default_db_collection).find({ "solutionId": parseInt(req.params.solutionId) }).sort({ "solutionLikes": 1}).toArray(function (err, response) {      
+        db.collection(default_db_collection).find({ "solutionId": parseInt(req.params.solutionId) }).toArray(function (err, response) {      
                         
             var likeCount = parseInt(response[0]["solutionLikesCount"]);            
             
