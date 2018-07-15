@@ -130,7 +130,7 @@ class SolutionsCardItem extends React.Component {
     // console.log(this.props.events)
 
     extraDesc1 = "This solution was submitted on ";
-    extraDesc1Val = Months[new Date(item.solutionSubmissionDate).getDay().toString()] + " " + new Date(item.solutionSubmissionDate).getDate().toString() + ", " + new Date(item.solutionSubmissionDate).getFullYear().toString();
+    extraDesc1Val = Months[new Date(item.solutionSubmissionDate).getMonth().toString()] + " " + new Date(item.solutionSubmissionDate).getDate().toString() + ", " + new Date(item.solutionSubmissionDate).getFullYear().toString();
     extraDesc2 = " as part of " + this.props.events[0].eventName
     extraDesc3 = "Keywords : "
     extraDesc3Val = item.solutionKeywords.map(function (item) {
@@ -156,7 +156,7 @@ class SolutionsCardItem extends React.Component {
             </IconButton>
           }
           title={item.solutionName}
-          subheader={Months[new Date(item.solutionSubmissionDate).getDay().toString()] + " " + new Date(item.solutionSubmissionDate).getDate().toString() + ", " + new Date(item.solutionSubmissionDate).getFullYear().toString()}
+          subheader={Months[new Date(item.solutionSubmissionDate).getMonth().toString()] + " " + new Date(item.solutionSubmissionDate).getDate().toString() + ", " + new Date(item.solutionSubmissionDate).getFullYear().toString()}
         />
         <CardMedia
           className={classes.media}

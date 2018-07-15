@@ -127,10 +127,10 @@ class PrevCardItem extends React.Component {
     // console.log(item);
 
     extraDesc2 = "This event was released on ";
-    extraDesc2Val = Months[new Date(item.eventReleaseDate).getDay().toString()] + " " + new Date(item.eventReleaseDate).getDate().toString() + ", " + new Date(item.eventReleaseDate).getFullYear().toString();
+    extraDesc2Val = Months[new Date(item.eventReleaseDate).getMonth().toString()] + " " + new Date(item.eventReleaseDate).getDate().toString() + ", " + new Date(item.eventReleaseDate).getFullYear().toString();
     extraDesc = "Event Schedule : ";
-    extraDescVal = Months[new Date(item.eventStartDate).getDay().toString()] + " " + new Date(item.eventStartDate).getDate().toString() + ", " + new Date(item.eventStartDate).getFullYear().toString();
-    extraDesc1Val = Months[new Date(item.eventEndDate).getDay().toString()] + " " + new Date(item.eventEndDate).getDate().toString() + ", " + new Date(item.eventEndDate).getFullYear().toString();
+    extraDescVal = Months[new Date(item.eventStartDate).getMonth().toString()] + " " + new Date(item.eventStartDate).getDate().toString() + ", " + new Date(item.eventStartDate).getFullYear().toString();
+    extraDesc1Val = Months[new Date(item.eventEndDate).getMonth().toString()] + " " + new Date(item.eventEndDate).getDate().toString() + ", " + new Date(item.eventEndDate).getFullYear().toString();
     iconBtn = "iconBtn" + item.eventId;
 
     return (
@@ -147,7 +147,7 @@ class PrevCardItem extends React.Component {
             </IconButton>
           }
           title={item.eventName}
-          subheader={Months[new Date(item.eventStartDate).getDay().toString()] + " " + new Date(item.eventStartDate).getDate().toString() + ", " + new Date(item.eventStartDate).getFullYear().toString()}
+          subheader={Months[new Date(item.eventStartDate).getMonth().toString()] + " " + new Date(item.eventStartDate).getDate().toString() + ", " + new Date(item.eventStartDate).getFullYear().toString()}
         />
         <CardMedia
           className={classes.media}

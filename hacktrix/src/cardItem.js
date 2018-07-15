@@ -79,31 +79,31 @@ class CardItem extends React.Component {
 
         if (me.props.tabType === "Live") {
             extraDesc2 = "This event is live from ";
-            extraDesc2Val = Months[new Date(item.eventReleaseDate).getDay().toString()] + " " + new Date(item.eventReleaseDate).getDate().toString() + ", " + new Date(item.eventReleaseDate).getFullYear().toString();
+            extraDesc2Val = Months[new Date(item.eventReleaseDate).getMonth().toString()] + " " + new Date(item.eventReleaseDate).getDate().toString() + ", " + new Date(item.eventReleaseDate).getFullYear().toString();
             extraDesc = "Gear up for the demo on ";
-            extraDescVal = Months[new Date(item.eventDemoDate).getDay().toString()] + " " + new Date(item.eventDemoDate).getDate().toString() + ", " + new Date(item.eventDemoDate).getFullYear().toString();
+            extraDescVal = Months[new Date(item.eventDemoDate).getMonth().toString()] + " " + new Date(item.eventDemoDate).getDate().toString() + ", " + new Date(item.eventDemoDate).getFullYear().toString();
             extraDesc1 = "Get excited for the Grand Finale Date on ";
-            extraDesc1Val = Months[new Date(item.eventFinaleDate).getDay().toString()] + " " + new Date(item.eventFinaleDate).getDate().toString() + ", " + new Date(item.eventFinaleDate).getFullYear().toString();
+            extraDesc1Val = Months[new Date(item.eventFinaleDate).getMonth().toString()] + " " + new Date(item.eventFinaleDate).getDate().toString() + ", " + new Date(item.eventFinaleDate).getFullYear().toString();
           } else if (me.props.tabType === "Upcoming") {
             extraDesc2 = "This event is scheduled for ";
-            extraDesc2Val = Months[new Date(item.eventReleaseDate).getDay().toString()] + " " + new Date(item.eventReleaseDate).getDate().toString() + ", " + new Date(item.eventReleaseDate).getFullYear().toString();;
+            extraDesc2Val = Months[new Date(item.eventReleaseDate).getMonth().toString()] + " " + new Date(item.eventReleaseDate).getDate().toString() + ", " + new Date(item.eventReleaseDate).getFullYear().toString();;
             extraDesc = "Nominations starts on ";
-            extraDescVal = Months[new Date(item.eventNominationStartDate).getDay().toString()] + " " + new Date(item.eventNominationStartDate).getDate().toString() + ", " + new Date(item.eventNominationStartDate).getFullYear().toString();
+            extraDescVal = Months[new Date(item.eventNominationStartDate).getMonth().toString()] + " " + new Date(item.eventNominationStartDate).getDate().toString() + ", " + new Date(item.eventNominationStartDate).getFullYear().toString();
             extraDesc1 = "Nominations closes on ";
-            extraDesc1Val = Months[new Date(item.eventNominationEndDate).getDay().toString()] + " " + new Date(item.eventNominationEndDate).getDate().toString() + ", " + new Date(item.eventNominationEndDate).getFullYear().toString();
+            extraDesc1Val = Months[new Date(item.eventNominationEndDate).getMonth().toString()] + " " + new Date(item.eventNominationEndDate).getDate().toString() + ", " + new Date(item.eventNominationEndDate).getFullYear().toString();
           } else if (me.props.tabType === "Previous") {
             extraDesc2 = "This event was announced on ";
-            extraDesc2Val = Months[new Date(item.eventReleaseDate).getDay().toString()] + " " + new Date(item.eventReleaseDate).getDate().toString() + ", " + new Date(item.eventReleaseDate).getFullYear().toString();;
+            extraDesc2Val = Months[new Date(item.eventReleaseDate).getMonth().toString()] + " " + new Date(item.eventReleaseDate).getDate().toString() + ", " + new Date(item.eventReleaseDate).getFullYear().toString();;
             extraDesc = "This event was started on ";
-            extraDescVal = Months[new Date(item.eventStartDate).getDay().toString()] + " " + new Date(item.eventStartDate).getDate().toString() + ", " + new Date(item.eventStartDate).getFullYear().toString();
+            extraDescVal = Months[new Date(item.eventStartDate).getMonth().toString()] + " " + new Date(item.eventStartDate).getDate().toString() + ", " + new Date(item.eventStartDate).getFullYear().toString();
             extraDesc1 = "This event was ended on ";
-            extraDesc1Val = Months[new Date(item.eventEndDate).getDay().toString()] + " " + new Date(item.eventEndDate).getDate().toString() + ", " + new Date(item.eventEndDate).getFullYear().toString();
+            extraDesc1Val = Months[new Date(item.eventEndDate).getMonth().toString()] + " " + new Date(item.eventEndDate).getDate().toString() + ", " + new Date(item.eventEndDate).getFullYear().toString();
           }
           return (
             <Card key={item.eventId} id={item.eventId} className={classes.card}>
               <CardHeader
                 avatar={
-                  <Avatar aria-label="Recipe" className={classes.avatar}>
+                  <Avatar aria-label="Avatar Image" className={classes.avatar}>
                     {item.eventName.charAt(0)}
                   </Avatar>
                 }
@@ -113,7 +113,7 @@ class CardItem extends React.Component {
                   </IconButton>
                 }
                 title={item.eventName}
-                subheader={Months[new Date(item.eventStartDate).getDay().toString()] + " " + new Date(item.eventStartDate).getDate().toString() + ", " + new Date(item.eventStartDate).getFullYear().toString()}
+                subheader={Months[new Date(item.eventStartDate).getMonth().toString()] + " " + new Date(item.eventStartDate).getDate().toString() + ", " + new Date(item.eventStartDate).getFullYear().toString()}
               />
               <CardMedia
                 className={classes.media}
