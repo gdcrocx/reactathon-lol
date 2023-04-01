@@ -1,2 +1,2 @@
 # reactathon-lol
-Verizon Reactathon
+Reactathon 2016
